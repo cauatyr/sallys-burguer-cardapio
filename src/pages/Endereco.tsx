@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin } from 'lucide-react';
@@ -17,7 +16,6 @@ const Endereco = () => {
     complemento: ''
   });
 
-  // Recuperar itens do carrinho do localStorage ou state
   const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
 
   const handleInputChange = (field: string, value: string) => {
@@ -41,7 +39,6 @@ const Endereco = () => {
 
     console.log('Dados do endereço:', formData);
     
-    // Navegar para a página de pagamento com os dados
     navigate('/pagamento', {
       state: {
         cartItems,
@@ -51,7 +48,7 @@ const Endereco = () => {
   };
 
   return (
-    <div className="min-h-screen bg-orange-50">
+    <div className="min-h-screen bg-red-50">
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
@@ -59,12 +56,12 @@ const Endereco = () => {
             <Button
               variant="ghost"
               onClick={() => navigate('/')}
-              className="p-2"
+              className="p-2 hover:scale-105 transition-transform duration-300"
             >
               <ArrowLeft size={24} />
             </Button>
             <div className="flex items-center space-x-2">
-              <MapPin className="text-orange-500" size={24} />
+              <MapPin className="text-red-500" size={24} />
               <h1 className="text-xl font-bold text-gray-800">Endereço de Entrega</h1>
             </div>
           </div>
@@ -73,7 +70,7 @@ const Endereco = () => {
 
       {/* Form */}
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
           <div className="mb-8 text-center">
             <div className="text-4xl mb-4">📍</div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Onde você está?</h2>
@@ -92,7 +89,7 @@ const Endereco = () => {
                   value={formData.bairro}
                   onChange={(e) => handleInputChange('bairro', e.target.value)}
                   placeholder="Ex: Centro"
-                  className="w-full"
+                  className="w-full transition-all duration-300 focus:scale-105"
                   required
                 />
               </div>
@@ -107,7 +104,7 @@ const Endereco = () => {
                   value={formData.rua}
                   onChange={(e) => handleInputChange('rua', e.target.value)}
                   placeholder="Ex: Rua das Flores"
-                  className="w-full"
+                  className="w-full transition-all duration-300 focus:scale-105"
                   required
                 />
               </div>
@@ -124,7 +121,7 @@ const Endereco = () => {
                   value={formData.numero}
                   onChange={(e) => handleInputChange('numero', e.target.value)}
                   placeholder="Ex: 123"
-                  className="w-full"
+                  className="w-full transition-all duration-300 focus:scale-105"
                   required
                 />
               </div>
@@ -139,7 +136,7 @@ const Endereco = () => {
                   value={formData.complemento}
                   onChange={(e) => handleInputChange('complemento', e.target.value)}
                   placeholder="Ex: Apto 101, Bloco A"
-                  className="w-full"
+                  className="w-full transition-all duration-300 focus:scale-105"
                 />
               </div>
             </div>
@@ -147,7 +144,7 @@ const Endereco = () => {
             <div className="pt-6">
               <Button 
                 type="submit"
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-medium"
+                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-300 hover:scale-105 transform"
               >
                 Seguir para a forma de pagamento
               </Button>

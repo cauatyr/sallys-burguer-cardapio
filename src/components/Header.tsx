@@ -18,31 +18,33 @@ const Header = ({ cartItemsCount = 0, cartItems = [] }: HeaderProps) => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">S</span>
+            <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+              <div className="text-white font-bold text-lg">
+                🍔
+              </div>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-800">Sabores Únicos</h1>
-              <p className="text-xs text-gray-500">Restaurante</p>
+              <h1 className="text-2xl font-bold text-gray-800">Sally's Burguer</h1>
+              <p className="text-xs text-gray-500">Bar & Lanchonete</p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#cardapio" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+            <a href="#cardapio" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
               Cardápio
             </a>
-            <a href="#sobre" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+            <a href="#sobre" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
               Sobre
             </a>
-            <a href="#contato" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+            <a href="#contato" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
               Contato
             </a>
             <Cart cartItems={cartItems}>
-              <button className="relative bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-full font-medium transition-colors">
+              <button className="relative bg-red-600 hover:bg-red-700 text-white p-3 rounded-full font-medium transition-all duration-300 hover:scale-110 hover:shadow-lg transform">
                 <ShoppingCart size={20} />
                 {cartItemsCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center animate-pulse">
                     {cartItemsCount}
                   </span>
                 )}
@@ -53,7 +55,7 @@ const Header = ({ cartItemsCount = 0, cartItems = [] }: HeaderProps) => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -63,21 +65,21 @@ const Header = ({ cartItemsCount = 0, cartItems = [] }: HeaderProps) => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t animate-fade-in">
             <nav className="flex flex-col space-y-4">
-              <a href="#cardapio" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+              <a href="#cardapio" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
                 Cardápio
               </a>
-              <a href="#sobre" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+              <a href="#sobre" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
                 Sobre
               </a>
-              <a href="#contato" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
+              <a href="#contato" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
                 Contato
               </a>
               <Cart cartItems={cartItems}>
-                <button className="relative bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-full font-medium transition-colors w-fit flex items-center space-x-2">
+                <button className="relative bg-red-600 hover:bg-red-700 text-white p-3 rounded-full font-medium transition-all duration-300 hover:scale-110 w-fit flex items-center space-x-2">
                   <ShoppingCart size={20} />
                   <span>Carrinho</span>
                   {cartItemsCount > 0 && (
-                    <span className="bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
+                    <span className="bg-yellow-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center animate-pulse">
                       {cartItemsCount}
                     </span>
                   )}

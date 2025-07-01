@@ -2,167 +2,249 @@
 import { MenuItem } from '../types/menu';
 
 export const menuData: MenuItem[] = [
-  // Pratos Principais
+  // Pratos Principais - Hamburgers
   {
     id: '1',
-    name: 'Salmão Grelhado',
-    description: 'Salmão fresco grelhado com ervas finas, acompanhado de legumes salteados e arroz integral.',
-    price: 42.90,
-    originalPrice: 48.90,
-    emoji: '🐟',
+    name: 'Sally\'s Classic Burger',
+    description: 'Hambúrguer artesanal de 150g, queijo cheddar, alface, tomate, cebola e molho especial.',
+    price: 28.90,
+    originalPrice: 32.90,
+    emoji: '🍔',
     category: 'pratos',
-    categoryName: 'Pratos Principais',
-    tags: ['Saudável', 'Rico em Ômega 3'],
+    categoryName: 'Hamburgers',
+    tags: ['Clássico', 'Artesanal'],
     isPopular: true
   },
   {
     id: '2',
-    name: 'Picanha na Brasa',
-    description: 'Suculenta picanha grelhada no ponto, servida com farofa especial, vinagrete e batata rústica.',
-    price: 52.90,
-    emoji: '🥩',
+    name: 'Bacon Cheese Burger',
+    description: 'Hambúrguer duplo com bacon crocante, queijo cheddar derretido e molho barbecue.',
+    price: 34.90,
+    emoji: '🥓',
     category: 'pratos',
-    categoryName: 'Pratos Principais',
-    tags: ['Churrasco', 'Premium'],
+    categoryName: 'Hamburgers',
+    tags: ['Bacon', 'Premium'],
     isPopular: true
   },
   {
     id: '3',
-    name: 'Risotto de Camarão',
-    description: 'Cremoso risotto de camarão com açafrão, finalizado com queijo parmesão e ervas frescas.',
-    price: 38.90,
-    emoji: '🍤',
+    name: 'Chicken Crispy',
+    description: 'Peito de frango empanado crocante, maionese, alface e tomate no pão brioche.',
+    price: 26.90,
+    emoji: '🍗',
     category: 'pratos',
-    categoryName: 'Pratos Principais',
-    tags: ['Frutos do Mar', 'Italiano']
+    categoryName: 'Hamburgers',
+    tags: ['Frango', 'Crocante']
   },
   {
     id: '4',
-    name: 'Frango à Parmegiana',
-    description: 'Peito de frango empanado, molho de tomate especial, mussarela derretida e batata frita.',
-    price: 32.90,
-    emoji: '🍗',
+    name: 'Veggie Burger',
+    description: 'Hambúrguer vegano de grão-de-bico, rúcula, tomate seco e molho de tahine.',
+    price: 24.90,
+    emoji: '🥬',
     category: 'pratos',
-    categoryName: 'Pratos Principais',
-    tags: ['Clássico', 'Familiar']
+    categoryName: 'Hamburgers',
+    tags: ['Vegano', 'Saudável'],
+    isNew: true
   },
 
-  // Entradas
+  // Entradas - Aperitivos
   {
     id: '5',
-    name: 'Bruschetta Italiana',
-    description: 'Pão italiano tostado com tomate, manjericão, alho e azeite extra virgem.',
-    price: 18.90,
-    emoji: '🍞',
+    name: 'Batata Frita Especial',
+    description: 'Batatas rústicas fritas com temperos especiais e molho de queijo.',
+    price: 16.90,
+    emoji: '🍟',
     category: 'entradas',
-    categoryName: 'Entradas',
-    tags: ['Vegetariano', 'Italiano']
+    categoryName: 'Aperitivos',
+    tags: ['Compartilhar', 'Clássico']
   },
   {
     id: '6',
-    name: 'Carpaccio de Salmão',
-    description: 'Fatias finas de salmão fresco, alcaparras, rúcula e molho de mostarda.',
-    price: 28.90,
-    emoji: '🐟',
+    name: 'Onion Rings',
+    description: 'Anéis de cebola empanados e fritos, servidos com molho ranch.',
+    price: 18.90,
+    emoji: '🧅',
     category: 'entradas',
-    categoryName: 'Entradas',
-    tags: ['Premium', 'Frutos do Mar'],
-    isNew: true
+    categoryName: 'Aperitivos',
+    tags: ['Crocante', 'Especial']
   },
   {
     id: '7',
-    name: 'Pastéis Variados',
-    description: 'Seleção de pastéis crocantes: queijo, carne, camarão e palmito.',
-    price: 22.90,
-    emoji: '🥟',
+    name: 'Nachos Supreme',
+    description: 'Nachos com queijo derretido, guacamole, pico de gallo e jalapeños.',
+    price: 24.90,
+    emoji: '🌮',
     category: 'entradas',
-    categoryName: 'Entradas',
-    tags: ['Brasileiro', 'Compartilhar']
+    categoryName: 'Aperitivos',
+    tags: ['Mexicano', 'Compartilhar'],
+    isNew: true
   },
 
-  // Bebidas
+  // Bebidas Não Alcoólicas
   {
     id: '8',
-    name: 'Caipirinha Premium',
-    description: 'Cachaça artesanal, limão tahiti, açúcar orgânico e gelo.',
-    price: 16.90,
-    emoji: '🍹',
+    name: 'Água com Gás',
+    description: 'Água mineral com gás gelada.',
+    price: 4.90,
+    emoji: '💧',
     category: 'bebidas',
     categoryName: 'Bebidas',
-    tags: ['Alcoólica', 'Brasileiro']
+    tags: ['Refrescante', 'Natural']
   },
   {
     id: '9',
-    name: 'Suco Natural Detox',
-    description: 'Couve, maçã verde, gengibre, limão e água de coco.',
+    name: 'Água sem Gás',
+    description: 'Água mineral natural gelada.',
+    price: 3.90,
+    emoji: '💦',
+    category: 'bebidas',
+    categoryName: 'Bebidas',
+    tags: ['Natural', 'Hidratante']
+  },
+  {
+    id: '10',
+    name: 'Coca-Cola Lata',
+    description: 'Coca-Cola tradicional em lata 350ml.',
+    price: 6.90,
+    emoji: '🥤',
+    category: 'bebidas',
+    categoryName: 'Bebidas',
+    tags: ['Refrigerante', 'Clássico']
+  },
+  {
+    id: '11',
+    name: 'Coca-Cola Zero Lata',
+    description: 'Coca-Cola Zero açúcar em lata 350ml.',
+    price: 6.90,
+    emoji: '🥤',
+    category: 'bebidas',
+    categoryName: 'Bebidas',
+    tags: ['Zero Açúcar', 'Refrigerante']
+  },
+  {
+    id: '12',
+    name: 'Coca-Cola 2L',
+    description: 'Coca-Cola tradicional garrafa 2 litros.',
     price: 12.90,
     emoji: '🥤',
     category: 'bebidas',
     categoryName: 'Bebidas',
-    tags: ['Natural', 'Saudável', 'Detox']
+    tags: ['Família', 'Refrigerante']
   },
   {
-    id: '10',
-    name: 'Vinho Tinto Reserva',
-    description: 'Vinho tinto encorpado, notas frutadas, ideal para carnes vermelhas.',
-    price: 85.90,
-    emoji: '🍷',
+    id: '13',
+    name: 'Pepsi',
+    description: 'Pepsi gelada em lata 350ml.',
+    price: 6.90,
+    emoji: '🥤',
     category: 'bebidas',
     categoryName: 'Bebidas',
-    tags: ['Alcoólica', 'Premium', 'Importado']
+    tags: ['Refrigerante', 'Refrescante']
   },
   {
-    id: '11',
-    name: 'Água Saborizada',
-    description: 'Água com gás saborizada com limão siciliano e hortelã.',
+    id: '14',
+    name: 'Guaraná',
+    description: 'Guaraná Antarctica gelado em lata 350ml.',
+    price: 6.90,
+    emoji: '🥤',
+    category: 'bebidas',
+    categoryName: 'Bebidas',
+    tags: ['Brasileiro', 'Refrigerante']
+  },
+  {
+    id: '15',
+    name: 'Energético',
+    description: 'Red Bull energy drink 250ml.',
+    price: 12.90,
+    emoji: '⚡',
+    category: 'bebidas',
+    categoryName: 'Bebidas',
+    tags: ['Energia', 'Premium']
+  },
+
+  // Bebidas Alcoólicas
+  {
+    id: '16',
+    name: 'Cerveja Heineken',
+    description: 'Cerveja Heineken long neck 330ml gelada.',
     price: 8.90,
-    emoji: '💧',
-    category: 'bebidas',
-    categoryName: 'Bebidas',
-    tags: ['Refrescante', 'Zero Açúcar']
+    emoji: '🍺',
+    category: 'bebidas-alcoolicas',
+    categoryName: 'Bebidas Alcoólicas',
+    tags: ['Cerveja', 'Importada']
+  },
+  {
+    id: '17',
+    name: 'Cerveja Skol',
+    description: 'Cerveja Skol lata 350ml gelada.',
+    price: 5.90,
+    emoji: '🍺',
+    category: 'bebidas-alcoolicas',
+    categoryName: 'Bebidas Alcoólicas',
+    tags: ['Cerveja', 'Nacional']
+  },
+  {
+    id: '18',
+    name: 'Caipirinha',
+    description: 'Caipirinha tradicional com cachaça, limão e açúcar.',
+    price: 16.90,
+    emoji: '🍹',
+    category: 'bebidas-alcoolicas',
+    categoryName: 'Bebidas Alcoólicas',
+    tags: ['Cachaça', 'Brasileiro']
+  },
+  {
+    id: '19',
+    name: 'Whisky Dose',
+    description: 'Dose de whisky nacional com gelo.',
+    price: 18.90,
+    emoji: '🥃',
+    category: 'bebidas-alcoolicas',
+    categoryName: 'Bebidas Alcoólicas',
+    tags: ['Whisky', 'Premium']
+  },
+  {
+    id: '20',
+    name: 'Vodka com Energético',
+    description: 'Vodka premium com energético Red Bull.',
+    price: 24.90,
+    emoji: '🍸',
+    category: 'bebidas-alcoolicas',
+    categoryName: 'Bebidas Alcoólicas',
+    tags: ['Vodka', 'Energético']
   },
 
   // Sobremesas
   {
-    id: '12',
-    name: 'Petit Gâteau',
-    description: 'Bolinho de chocolate quente com sorvete de baunilha e calda especial.',
-    price: 19.90,
-    emoji: '🍰',
+    id: '21',
+    name: 'Milk Shake de Chocolate',
+    description: 'Milk shake cremoso de chocolate com chantilly e cereja.',
+    price: 16.90,
+    emoji: '🥤',
     category: 'sobremesas',
     categoryName: 'Sobremesas',
-    tags: ['Chocolate', 'Quente'],
+    tags: ['Chocolate', 'Cremoso'],
     isPopular: true
   },
   {
-    id: '13',
-    name: 'Tiramisù Tradicional',
-    description: 'Sobremesa italiana com café, mascarpone, ladyfingers e cacau.',
-    price: 16.90,
-    emoji: '🎂',
+    id: '22',
+    name: 'Brownie com Sorvete',
+    description: 'Brownie quente com sorvete de baunilha e calda de chocolate.',
+    price: 18.90,
+    emoji: '🍰',
     category: 'sobremesas',
     categoryName: 'Sobremesas',
-    tags: ['Italiano', 'Café', 'Clássico']
+    tags: ['Chocolate', 'Quente']
   },
   {
-    id: '14',
-    name: 'Pudim de Leite',
-    description: 'Pudim cremoso da casa com calda de caramelo e chantilly.',
+    id: '23',
+    name: 'Torta de Limão',
+    description: 'Fatia de torta de limão com merengue queimado.',
     price: 14.90,
-    emoji: '🍮',
+    emoji: '🍋',
     category: 'sobremesas',
     categoryName: 'Sobremesas',
-    tags: ['Brasileiro', 'Cremoso', 'Tradicional']
-  },
-  {
-    id: '15',
-    name: 'Mousse de Maracujá',
-    description: 'Mousse aerado de maracujá com cobertura de chocolate branco.',
-    price: 15.90,
-    emoji: '🥭',
-    category: 'sobremesas',
-    categoryName: 'Sobremesas',
-    tags: ['Tropical', 'Leve', 'Refrescante'],
-    isNew: true
+    tags: ['Cítrico', 'Refrescante']
   }
 ];

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { X, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
@@ -66,16 +65,16 @@ const Cart = ({ cartItems, children }: CartProps) => {
             <>
               <div className="flex-1 overflow-y-auto space-y-4">
                 {groupedItems.map((item) => (
-                  <div key={item.id} className="bg-gray-50 rounded-lg p-4">
+                  <div key={item.id} className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-300">
                     <div className="flex items-start space-x-3">
-                      <div className="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center">
+                      <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center">
                         <span className="text-2xl">{item.emoji}</span>
                       </div>
                       <div className="flex-1">
                         <h4 className="font-semibold text-gray-800">{item.name}</h4>
                         <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
                         <div className="flex items-center justify-between mt-2">
-                          <span className="font-bold text-orange-600">
+                          <span className="font-bold text-red-600">
                             R$ {(item.price * item.quantity).toFixed(2)}
                           </span>
                           <div className="flex items-center space-x-2">
@@ -91,14 +90,14 @@ const Cart = ({ cartItems, children }: CartProps) => {
               <div className="border-t pt-4 mt-4">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-lg font-semibold">Total:</span>
-                  <span className="text-2xl font-bold text-orange-600">
+                  <span className="text-2xl font-bold text-red-600">
                     R$ {totalPrice.toFixed(2)}
                   </span>
                 </div>
                 
                 <Button 
                   onClick={handleContinueOrder}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-medium"
+                  className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-300 hover:scale-105 transform"
                 >
                   Continuar o Pedido
                 </Button>

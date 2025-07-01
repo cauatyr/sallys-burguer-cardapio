@@ -25,7 +25,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
       style={{ animationDelay: `${delay}s` }}
     >
       {/* Image */}
-      <div className="relative h-48 bg-orange-100 overflow-hidden">
+      <div className="relative h-48 bg-red-100 overflow-hidden">
         {!imageError && item.image ? (
           <img
             src={item.image}
@@ -42,7 +42,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
         {/* Favorite Button */}
         <button
           onClick={() => setIsFavorite(!isFavorite)}
-          className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-md"
+          className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 hover:scale-110 shadow-md"
         >
           <Heart
             size={20}
@@ -53,7 +53,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
         </button>
 
         {/* Category Badge */}
-        <div className="absolute top-3 left-3 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+        <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium animate-pulse">
           {item.categoryName}
         </div>
       </div>
@@ -61,11 +61,11 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
       {/* Content */}
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold text-gray-800 group-hover:text-orange-600 transition-colors">
+          <h3 className="text-xl font-bold text-gray-800 group-hover:text-red-600 transition-colors">
             {item.name}
           </h3>
           <div className="text-right">
-            <div className="text-2xl font-bold text-orange-600">
+            <div className="text-2xl font-bold text-red-600">
               R$ {item.price.toFixed(2)}
             </div>
             {item.originalPrice && (
@@ -86,7 +86,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
             {item.tags.map((tag, index) => (
               <span
                 key={index}
-                className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+                className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full hover:bg-red-100 transition-colors duration-300"
               >
                 {tag}
               </span>
@@ -97,7 +97,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
         {/* Add to Cart Button */}
         <button 
           onClick={handleAddToCart}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg"
+          className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-105 transform"
         >
           <Plus size={20} />
           <span>Adicionar ao Pedido</span>
