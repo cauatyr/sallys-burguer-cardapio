@@ -17,6 +17,9 @@ const Endereco = () => {
     complemento: ''
   });
 
+  // Recuperar itens do carrinho do localStorage ou state
+  const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
@@ -38,15 +41,13 @@ const Endereco = () => {
 
     console.log('Dados do endereço:', formData);
     
-    toast({
-      title: "Endereço salvo!",
-      description: "Seu pedido foi registrado com sucesso.",
+    // Navegar para a página de pagamento com os dados
+    navigate('/pagamento', {
+      state: {
+        cartItems,
+        endereco: formData
+      }
     });
-
-    // Aqui você pode adicionar a lógica para processar o pedido
-    setTimeout(() => {
-      navigate('/');
-    }, 2000);
   };
 
   return (
@@ -148,7 +149,7 @@ const Endereco = () => {
                 type="submit"
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-medium"
               >
-                Finalizar Pedido
+                Seguir para a forma de pagamento
               </Button>
             </div>
           </form>

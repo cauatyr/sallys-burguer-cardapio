@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { Button } from './ui/button';
@@ -18,6 +18,11 @@ interface CartProps {
 const Cart = ({ cartItems, children }: CartProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
+  // Salvar itens do carrinho no localStorage sempre que mudarem
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   // Agrupar itens por ID e contar quantidades
   const groupedItems: CartItem[] = cartItems.reduce((acc: CartItem[], item) => {
