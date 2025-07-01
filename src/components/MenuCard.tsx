@@ -6,11 +6,18 @@ import { MenuItem } from '../types/menu';
 interface MenuCardProps {
   item: MenuItem;
   delay?: number;
+  onAddToCart?: (item: MenuItem) => void;
 }
 
-const MenuCard = ({ item, delay = 0 }: MenuCardProps) => {
+const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [imageError, setImageError] = useState(false);
+
+  const handleAddToCart = () => {
+    if (onAddToCart) {
+      onAddToCart(item);
+    }
+  };
 
   return (
     <div 
@@ -18,7 +25,7 @@ const MenuCard = ({ item, delay = 0 }: MenuCardProps) => {
       style={{ animationDelay: `${delay}s` }}
     >
       {/* Image */}
-      <div className="relative h-48 bg-gradient-to-br from-orange-100 to-red-100 overflow-hidden">
+      <div className="relative h-48 bg-orange-100 overflow-hidden">
         {!imageError && item.image ? (
           <img
             src={item.image}
@@ -88,7 +95,10 @@ const MenuCard = ({ item, delay = 0 }: MenuCardProps) => {
         )}
 
         {/* Add to Cart Button */}
-        <button className="w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg">
+        <button 
+          onClick={handleAddToCart}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg"
+        >
           <Plus size={20} />
           <span>Adicionar ao Pedido</span>
         </button>

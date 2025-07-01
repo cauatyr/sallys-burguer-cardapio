@@ -3,9 +3,11 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import MenuCategory from '../components/MenuCategory';
 import { menuData } from '../data/menuData';
+import { MenuItem } from '../types/menu';
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('todos');
+  const [cartItems, setCartItems] = useState<MenuItem[]>([]);
 
   const categories = [
     { id: 'todos', name: 'Todos', icon: '🍽️' },
@@ -19,12 +21,17 @@ const Index = () => {
     ? menuData 
     : menuData.filter(item => item.category === activeCategory);
 
+  const handleAddToCart = (item: MenuItem) => {
+    setCartItems(prev => [...prev, item]);
+    console.log('Item adicionado ao carrinho:', item.name);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">
-      <Header />
+    <div className="min-h-screen bg-orange-50">
+      <Header cartItemsCount={cartItems.length} />
       
       {/* Hero Section */}
-      <section className="py-16 px-4 text-center bg-gradient-to-r from-orange-600 to-red-600 text-white">
+      <section className="py-16 px-4 text-center bg-orange-600 text-white">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
             Sabores Únicos
@@ -64,7 +71,7 @@ const Index = () => {
       {/* Menu Items */}
       <section className="py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <MenuCategory items={filteredItems} />
+          <MenuCategory items={filteredItems} onAddToCart={handleAddToCart} />
         </div>
       </section>
 

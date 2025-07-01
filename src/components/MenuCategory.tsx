@@ -4,9 +4,10 @@ import { MenuItem } from '../types/menu';
 
 interface MenuCategoryProps {
   items: MenuItem[];
+  onAddToCart?: (item: MenuItem) => void;
 }
 
-const MenuCategory = ({ items }: MenuCategoryProps) => {
+const MenuCategory = ({ items, onAddToCart }: MenuCategoryProps) => {
   if (items.length === 0) {
     return (
       <div className="text-center py-12">
@@ -23,6 +24,7 @@ const MenuCategory = ({ items }: MenuCategoryProps) => {
           key={item.id}
           item={item}
           delay={index * 0.1}
+          onAddToCart={onAddToCart}
         />
       ))}
     </div>
