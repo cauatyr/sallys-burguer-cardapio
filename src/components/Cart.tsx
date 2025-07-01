@@ -1,0 +1,109 @@
+
+import { useState } from 'react';
+import { X, Minus, Plus, ShoppingCart } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
+import { Button } from './ui/button';
+import { MenuItem } from '../types/menu';
+import { useNavigate } from 'react-router-dom';
+
+interface CartItem extends MenuItem {
+  quantity: number;
+}
+
+interface CartProps {
+  cartItems: MenuItem[];
+  children: React.ReactNode;
+}
+
+const Cart = ({ cartItems, children }: CartProps) => {
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Agrupar itens por ID e contar quantidades
+  const groupedItems: CartItem[] = cartItems.reduce((acc: CartItem[], item) => {
+    const existingItem = acc.find(groupedItem => groupedItem.id === item.id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      acc.push({ ...item, quantity: 1 });
+    }
+    return acc;
+  }, []);
+
+  const totalPrice = groupedItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+  const handleContinueOrder = () => {
+    setIsOpen(false);
+    navigate('/endereco');
+  };
+
+  return (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        {children}
+      </SheetTrigger>
+      <SheetContent className="w-full sm:max-w-md">
+        <SheetHeader>
+          <SheetTitle className="flex items-center space-x-2">
+            <ShoppingCart size={24} />
+            <span>Meu Carrinho</span>
+          </SheetTitle>
+        </SheetHeader>
+
+        <div className="flex flex-col h-full mt-6">
+          {groupedItems.length === 0 ? (
+            <div className="flex-1 flex flex-col items-center justify-center text-center">
+              <div className="text-6xl mb-4">🛒</div>
+              <h3 className="text-lg font-semibold text-gray-600 mb-2">Carrinho vazio</h3>
+              <p className="text-gray-500">Adicione alguns itens deliciosos!</p>
+            </div>
+          ) : (
+            <>
+              <div className="flex-1 overflow-y-auto space-y-4">
+                {groupedItems.map((item) => (
+                  <div key={item.id} className="bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-16 h-16 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <span className="text-2xl">{item.emoji}</span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-800">{item.name}</h4>
+                        <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="font-bold text-orange-600">
+                            R$ {(item.price * item.quantity).toFixed(2)}
+                          </span>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-sm text-gray-500">Qtd: {item.quantity}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t pt-4 mt-4">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-lg font-semibold">Total:</span>
+                  <span className="text-2xl font-bold text-orange-600">
+                    R$ {totalPrice.toFixed(2)}
+                  </span>
+                </div>
+                
+                <Button 
+                  onClick={handleContinueOrder}
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-medium"
+                >
+                  Continuar o Pedido
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export default Cart;

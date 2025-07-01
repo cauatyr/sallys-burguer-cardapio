@@ -28,7 +28,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-orange-50">
-      <Header cartItemsCount={cartItems.length} />
+      <Header cartItemsCount={cartItems.length} cartItems={cartItems} />
       
       {/* Hero Section */}
       <section className="py-16 px-4 text-center bg-orange-600 text-white">

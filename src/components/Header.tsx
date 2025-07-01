@@ -1,12 +1,15 @@
 
 import { useState } from 'react';
 import { Menu, X, ShoppingCart } from 'lucide-react';
+import { MenuItem } from '../types/menu';
+import Cart from './Cart';
 
 interface HeaderProps {
   cartItemsCount?: number;
+  cartItems?: MenuItem[];
 }
 
-const Header = ({ cartItemsCount = 0 }: HeaderProps) => {
+const Header = ({ cartItemsCount = 0, cartItems = [] }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -35,14 +38,16 @@ const Header = ({ cartItemsCount = 0 }: HeaderProps) => {
             <a href="#contato" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
               Contato
             </a>
-            <button className="relative bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-full font-medium transition-colors">
-              <ShoppingCart size={20} />
-              {cartItemsCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
-                  {cartItemsCount}
-                </span>
-              )}
-            </button>
+            <Cart cartItems={cartItems}>
+              <button className="relative bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-full font-medium transition-colors">
+                <ShoppingCart size={20} />
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
+                    {cartItemsCount}
+                  </span>
+                )}
+              </button>
+            </Cart>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -67,15 +72,17 @@ const Header = ({ cartItemsCount = 0 }: HeaderProps) => {
               <a href="#contato" className="text-gray-700 hover:text-orange-600 font-medium transition-colors">
                 Contato
               </a>
-              <button className="relative bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-full font-medium transition-colors w-fit flex items-center space-x-2">
-                <ShoppingCart size={20} />
-                <span>Carrinho</span>
-                {cartItemsCount > 0 && (
-                  <span className="bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
-                    {cartItemsCount}
-                  </span>
-                )}
-              </button>
+              <Cart cartItems={cartItems}>
+                <button className="relative bg-orange-500 hover:bg-orange-600 text-white p-3 rounded-full font-medium transition-colors w-fit flex items-center space-x-2">
+                  <ShoppingCart size={20} />
+                  <span>Carrinho</span>
+                  {cartItemsCount > 0 && (
+                    <span className="bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
+                      {cartItemsCount}
+                    </span>
+                  )}
+                </button>
+              </Cart>
             </nav>
           </div>
         )}
