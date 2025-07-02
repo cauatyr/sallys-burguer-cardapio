@@ -49,41 +49,12 @@ const Index = () => {
       />
       
       {/* Hero Section com Banner */}
-      <section className="py-16 px-4 text-center bg-red-600 text-white relative overflow-hidden">
-        <div className="max-w-4xl mx-auto relative">
-          {/* Banner Image */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-20">
-            <img
-              src="/lovable-uploads/ae42da5f-24e1-457f-bcec-d2de3534ba58.png"
-              alt="Sally's Burger Banner"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          
-          {/* Logo */}
-          <div className="absolute left-8 top-1/2 transform -translate-y-1/2 hidden lg:block z-10">
-            <div className="w-32 h-32 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border-4 border-white/20 shadow-2xl hover:scale-110 transition-transform duration-300">
-              <div className="text-center">
-                <div className="text-4xl mb-1">🍔</div>
-                <div className="text-white font-bold text-sm">Sally's</div>
-                <div className="text-white/80 text-xs">Burguer</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="relative z-10">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
-              Sally's Burguer
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 opacity-90">
-              O melhor bar e lanchonete da cidade
-            </p>
-            <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-105 shadow-lg">
-              <span className="text-2xl">🍔</span>
-              <span className="font-medium">Hamburgers artesanais e muito mais!</span>
-            </div>
-          </div>
-        </div>
+      <section className="relative w-full h-96 overflow-hidden">
+        <img
+          src="/lovable-uploads/ae42da5f-24e1-457f-bcec-d2de3534ba58.png"
+          alt="Sally's Burger Banner"
+          className="w-full h-full object-cover"
+        />
       </section>
 
       {/* Category Navigation */}

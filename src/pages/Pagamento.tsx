@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, CreditCard, Smartphone, Banknote } from 'lucide-react';
@@ -17,6 +16,7 @@ interface LocationState {
     frete?: number;
     tipo?: string;
   };
+  nomeCliente?: string;
 }
 
 const Pagamento = () => {
@@ -25,7 +25,7 @@ const Pagamento = () => {
   const { toast } = useToast();
   
   const state = location.state as LocationState;
-  const { cartItems = [], endereco } = state || {};
+  const { cartItems = [], endereco, nomeCliente = '' } = state || {};
 
   const [formaPagamento, setFormaPagamento] = useState('');
   const [precisaTroco, setPrecisaTroco] = useState(false);
@@ -54,6 +54,52 @@ const Pagamento = () => {
     }
   };
 
+  const formatWhatsAppMessage = () => {
+    let message = `Nome do cliente: ${nomeCliente}\n\n`;
+    
+    // Endereço
+    if (endereco?.tipo === 'restaurante') {
+      message += `Local: Rua dos Hamburgers, 456 - Centro - São Paulo\n\n`;
+    } else {
+      message += `Endereço completo: ${endereco?.rua}, ${endereco?.numero}`;
+      if (endereco?.complemento) message += ` - ${endereco.complemento}`;
+      message += `\n${endereco?.bairro}\n\n`;
+    }
+    
+    // Produtos
+    message += `Produtos solicitados:\n\n`;
+    groupedItems.forEach((item) => {
+      message += `${item.name} – Quantidade: ${item.quantity} – Valor: R$ ${(item.price * item.quantity).toFixed(2)}\n`;
+    });
+    
+    // Subtotal e frete
+    message += `\nSubtotal: R$ ${subtotal.toFixed(2)}\n`;
+    if (freteValue > 0) {
+      message += `Frete: R$ ${freteValue.toFixed(2)}\n`;
+    }
+    message += `Total: R$ ${totalPrice.toFixed(2)}\n\n`;
+    
+    // Forma de pagamento
+    let metodoPagamento = '';
+    switch (formaPagamento) {
+      case 'cartao':
+        metodoPagamento = 'Cartão de Crédito/Débito';
+        break;
+      case 'pix':
+        metodoPagamento = 'PIX';
+        break;
+      case 'dinheiro':
+        metodoPagamento = precisaTroco ? `Dinheiro (Troco para R$ ${trocoValue})` : 'Dinheiro (Não precisa de troco)';
+        break;
+      default:
+        metodoPagamento = formaPagamento;
+    }
+    
+    message += `Forma de pagamento: ${metodoPagamento}`;
+    
+    return encodeURIComponent(message);
+  };
+
   const handleFinalizarPedido = () => {
     if (!formaPagamento) {
       toast({
@@ -73,25 +119,15 @@ const Pagamento = () => {
       return;
     }
 
-    console.log('Pedido finalizado:', {
-      itens: groupedItems,
-      endereco,
-      formaPagamento,
-      precisaTroco: formaPagamento === 'dinheiro' ? precisaTroco : false,
-      trocoValue: formaPagamento === 'dinheiro' && precisaTroco ? trocoValue : null,
-      subtotal,
-      frete: freteValue,
-      total: totalPrice
-    });
+    const whatsappMessage = formatWhatsAppMessage();
+    const whatsappUrl = `https://wa.me/5517992647180?text=${whatsappMessage}`;
+    
+    window.open(whatsappUrl, '_blank');
 
     toast({
-      title: "Pedido realizado com sucesso!",
-      description: "Seu pedido foi enviado para a cozinha.",
+      title: "Pedido enviado!",
+      description: "Você será redirecionado para o WhatsApp.",
     });
-
-    setTimeout(() => {
-      navigate('/');
-    }, 2000);
   };
 
   if (!state) {
