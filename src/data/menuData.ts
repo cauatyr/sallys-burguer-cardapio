@@ -27,6 +27,18 @@ export const menuData: MenuItem[] = [
     isPopular: true
   },
   {
+    id: '24',
+    name: 'Duplo Smash Burger',
+    description: 'Dois hambúrgueres smash com queijo derretido, alface, tomate e molho especial no pão brioche.',
+    price: 38.90,
+    image: '/lovable-uploads/39958822-168b-417f-8f91-f8e0dd1acb08.png',
+    emoji: '🍔',
+    category: 'pratos',
+    categoryName: 'Hamburgers',
+    tags: ['Duplo', 'Smash'],
+    isNew: true
+  },
+  {
     id: '3',
     name: 'Chicken Crispy',
     description: 'Peito de frango empanado crocante, maionese, alface e tomate no pão brioche.',
@@ -48,15 +60,16 @@ export const menuData: MenuItem[] = [
     isNew: true
   },
 
-  // Entradas - Aperitivos
+  // Entradas - Entradas
   {
     id: '5',
-    name: 'Batata Frita Especial',
-    description: 'Batatas rústicas fritas com temperos especiais e molho de queijo.',
+    name: 'Batata Frita com Molho Caseiro',
+    description: 'Batatas rústicas fritas com temperos especiais e molho caseiro.',
     price: 16.90,
+    image: '/lovable-uploads/bfb4249b-a2b3-419a-b67f-8ccb95bcabee.png',
     emoji: '🍟',
     category: 'entradas',
-    categoryName: 'Aperitivos',
+    categoryName: 'Entradas',
     tags: ['Compartilhar', 'Clássico']
   },
   {
@@ -64,20 +77,22 @@ export const menuData: MenuItem[] = [
     name: 'Onion Rings',
     description: 'Anéis de cebola empanados e fritos, servidos com molho ranch.',
     price: 18.90,
+    image: '/lovable-uploads/2db6c5a6-8ecf-4f5f-9e05-45c4cdb907a7.png',
     emoji: '🧅',
     category: 'entradas',
-    categoryName: 'Aperitivos',
+    categoryName: 'Entradas',
     tags: ['Crocante', 'Especial']
   },
   {
-    id: '7',
-    name: 'Nachos Supreme',
-    description: 'Nachos com queijo derretido, guacamole, pico de gallo e jalapeños.',
-    price: 24.90,
-    emoji: '🌮',
+    id: '25',
+    name: 'Tábua de Frios',
+    description: 'Seleção especial de queijos, embutidos, azeitonas e pães artesanais.',
+    price: 32.90,
+    image: '/lovable-uploads/d9b055e4-ead1-4eac-a3cc-8f47c175ec64.png',
+    emoji: '🧀',
     category: 'entradas',
-    categoryName: 'Aperitivos',
-    tags: ['Mexicano', 'Compartilhar'],
+    categoryName: 'Entradas',
+    tags: ['Gourmet', 'Compartilhar'],
     isNew: true
   },
 
@@ -87,6 +102,7 @@ export const menuData: MenuItem[] = [
     name: 'Água com Gás',
     description: 'Água mineral com gás gelada.',
     price: 4.90,
+    image: '/lovable-uploads/85031767-eace-4e9a-85c9-341006743eed.png',
     emoji: '💧',
     category: 'bebidas',
     categoryName: 'Bebidas',
@@ -117,6 +133,7 @@ export const menuData: MenuItem[] = [
     name: 'Coca-Cola Zero Lata',
     description: 'Coca-Cola Zero açúcar em lata 350ml.',
     price: 6.90,
+    image: '/lovable-uploads/a6a27cca-f69c-4646-8b01-853a9f88be09.png',
     emoji: '🥤',
     category: 'bebidas',
     categoryName: 'Bebidas',
@@ -147,6 +164,7 @@ export const menuData: MenuItem[] = [
     name: 'Guaraná',
     description: 'Guaraná Antarctica gelado em lata 350ml.',
     price: 6.90,
+    image: '/lovable-uploads/3bed842b-822c-4be2-b696-838c80ba713c.png',
     emoji: '🥤',
     category: 'bebidas',
     categoryName: 'Bebidas',
@@ -169,6 +187,7 @@ export const menuData: MenuItem[] = [
     name: 'Cerveja Heineken',
     description: 'Cerveja Heineken long neck 330ml gelada.',
     price: 8.90,
+    image: '/lovable-uploads/1ebd6bfa-93ed-4a50-9df2-13610bbc5284.png',
     emoji: '🍺',
     category: 'bebidas-alcoolicas',
     categoryName: 'Bebidas Alcoólicas',
@@ -221,6 +240,7 @@ export const menuData: MenuItem[] = [
     name: 'Milk Shake de Chocolate',
     description: 'Milk shake cremoso de chocolate com chantilly e cereja.',
     price: 16.90,
+    image: '/lovable-uploads/e3294489-7b66-4be2-9bdc-31885a6d6b82.png',
     emoji: '🥤',
     category: 'sobremesas',
     categoryName: 'Sobremesas',
@@ -228,14 +248,15 @@ export const menuData: MenuItem[] = [
     isPopular: true
   },
   {
-    id: '22',
-    name: 'Brownie com Sorvete',
-    description: 'Brownie quente com sorvete de baunilha e calda de chocolate.',
-    price: 18.90,
+    id: '26',
+    name: 'Petit Gateau',
+    description: 'Delicioso bolinho de chocolate quente com recheio cremoso, acompanhado de sorvete de baunilha e calda especial.',
+    price: 22.90,
+    image: '/lovable-uploads/4a911ec9-55e9-4c4f-a3fb-126c80119300.png',
     emoji: '🍰',
     category: 'sobremesas',
     categoryName: 'Sobremesas',
-    tags: ['Chocolate', 'Quente']
+    tags: ['Chocolate', 'Quente', 'Premium']
   },
   {
     id: '23',

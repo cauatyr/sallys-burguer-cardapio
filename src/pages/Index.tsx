@@ -12,10 +12,10 @@ const Index = () => {
   const categories = [
     { id: 'todos', name: 'Todos', icon: '🍽️' },
     { id: 'pratos', name: 'Hamburgers', icon: '🍔' },
+    { id: 'entradas', name: 'Entradas', icon: '🍟' },
     { id: 'bebidas', name: 'Bebidas', icon: '🥤' },
     { id: 'bebidas-alcoolicas', name: 'Bebidas Alcoólicas', icon: '🍺' },
-    { id: 'sobremesas', name: 'Sobremesas', icon: '🍰' },
-    { id: 'entradas', name: 'Aperitivos', icon: '🍟' }
+    { id: 'sobremesas', name: 'Sobremesas', icon: '🍰' }
   ];
 
   const filteredItems = activeCategory === 'todos' 
@@ -32,15 +32,26 @@ const Index = () => {
       <Header cartItemsCount={cartItems.length} cartItems={cartItems} />
       
       {/* Hero Section */}
-      <section className="py-16 px-4 text-center bg-red-600 text-white">
+      <section className="py-16 px-4 text-center bg-red-600 text-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto">
+          {/* Logo */}
+          <div className="absolute left-8 top-1/2 transform -translate-y-1/2 hidden lg:block">
+            <div className="w-32 h-32 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border-4 border-white/20 shadow-2xl hover:scale-110 transition-transform duration-300">
+              <div className="text-center">
+                <div className="text-4xl mb-1">🍔</div>
+                <div className="text-white font-bold text-sm">Sally's</div>
+                <div className="text-white/80 text-xs">Burguer</div>
+              </div>
+            </div>
+          </div>
+          
           <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
             Sally's Burguer
           </h1>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
             O melhor bar e lanchonete da cidade
           </p>
-          <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-105">
+          <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-105 shadow-lg">
             <span className="text-2xl">🍔</span>
             <span className="font-medium">Hamburgers artesanais e muito mais!</span>
           </div>
@@ -55,10 +66,10 @@ const Index = () => {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 transform ${
+                className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 transform shadow-md ${
                   activeCategory === category.id
-                    ? 'bg-red-500 text-white shadow-lg animate-pulse'
-                    : 'bg-gray-100 text-gray-700 hover:bg-red-100'
+                    ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
+                    : 'bg-gray-100 text-gray-700 hover:bg-red-100 hover:shadow-lg'
                 }`}
               >
                 <span className="text-xl">{category.icon}</span>

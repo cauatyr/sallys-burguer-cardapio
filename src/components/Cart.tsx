@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { X, Minus, Plus, ShoppingCart } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
@@ -97,9 +98,10 @@ const Cart = ({ cartItems, children }: CartProps) => {
                 
                 <Button 
                   onClick={handleContinueOrder}
-                  className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-300 hover:scale-105 transform"
+                  className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-500 hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/30 animate-pulse hover:animate-none relative overflow-hidden group"
                 >
-                  Continuar o Pedido
+                  <span className="relative z-10">Continuar o Pedido</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 </Button>
               </div>
             </>
