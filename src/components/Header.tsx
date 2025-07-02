@@ -7,9 +7,10 @@ import Cart from './Cart';
 interface HeaderProps {
   cartItemsCount?: number;
   cartItems?: MenuItem[];
+  onRemoveFromCart?: (itemId: string) => void;
 }
 
-const Header = ({ cartItemsCount = 0, cartItems = [] }: HeaderProps) => {
+const Header = ({ cartItemsCount = 0, cartItems = [], onRemoveFromCart }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -40,11 +41,11 @@ const Header = ({ cartItemsCount = 0, cartItems = [] }: HeaderProps) => {
             <a href="#contato" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
               Contato
             </a>
-            <Cart cartItems={cartItems}>
+            <Cart cartItems={cartItems} onRemoveItem={onRemoveFromCart}>
               <button className="relative bg-red-600 hover:bg-red-700 text-white p-3 rounded-full font-medium transition-all duration-300 hover:scale-110 hover:shadow-lg transform">
                 <ShoppingCart size={20} />
                 {cartItemsCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
                     {cartItemsCount}
                   </span>
                 )}
@@ -74,12 +75,12 @@ const Header = ({ cartItemsCount = 0, cartItems = [] }: HeaderProps) => {
               <a href="#contato" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
                 Contato
               </a>
-              <Cart cartItems={cartItems}>
+              <Cart cartItems={cartItems} onRemoveItem={onRemoveFromCart}>
                 <button className="relative bg-red-600 hover:bg-red-700 text-white p-3 rounded-full font-medium transition-all duration-300 hover:scale-110 w-fit flex items-center space-x-2">
                   <ShoppingCart size={20} />
                   <span>Carrinho</span>
                   {cartItemsCount > 0 && (
-                    <span className="bg-yellow-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center animate-pulse">
+                    <span className="bg-yellow-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
                       {cartItemsCount}
                     </span>
                   )}

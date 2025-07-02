@@ -38,9 +38,18 @@ const Cart = ({ cartItems, onRemoveItem, children }: CartProps) => {
 
   const totalPrice = groupedItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
-  const handleRemoveItem = (itemId: string) => {
+  const handleRemoveOne = (itemId: string) => {
     if (onRemoveItem) {
       onRemoveItem(itemId);
+    }
+  };
+
+  const handleRemoveAll = (itemId: string) => {
+    const item = groupedItems.find(item => item.id === itemId);
+    if (item && onRemoveItem) {
+      for (let i = 0; i < item.quantity; i++) {
+        onRemoveItem(itemId);
+      }
     }
   };
 
@@ -93,7 +102,7 @@ const Cart = ({ cartItems, onRemoveItem, children }: CartProps) => {
                             <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
                           </div>
                           <button
-                            onClick={() => handleRemoveItem(item.id)}
+                            onClick={() => handleRemoveAll(item.id)}
                             className="p-1 text-red-500 hover:bg-red-100 rounded-full transition-colors duration-200"
                           >
                             <Trash2 size={16} />
@@ -104,7 +113,25 @@ const Cart = ({ cartItems, onRemoveItem, children }: CartProps) => {
                             R$ {(item.price * item.quantity).toFixed(2)}
                           </span>
                           <div className="flex items-center space-x-2">
-                            <span className="text-sm text-gray-500">Qtd: {item.quantity}</span>
+                            <button
+                              onClick={() => handleRemoveOne(item.id)}
+                              className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+                            >
+                              <Minus size={12} />
+                            </button>
+                            <span className="text-sm text-gray-500 w-8 text-center">{item.quantity}</span>
+                            <button
+                              onClick={() => {
+                                // Adicionar um item do mesmo tipo
+                                const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+                                cartItems.push(item);
+                                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                                window.location.reload();
+                              }}
+                              className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors"
+                            >
+                              <Plus size={12} />
+                            </button>
                           </div>
                         </div>
                       </div>

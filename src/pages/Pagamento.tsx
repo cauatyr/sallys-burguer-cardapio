@@ -10,10 +10,12 @@ import { useToast } from '../hooks/use-toast';
 interface LocationState {
   cartItems: any[];
   endereco: {
-    bairro: string;
-    rua: string;
-    numero: string;
-    complemento: string;
+    bairro?: string;
+    rua?: string;
+    numero?: string;
+    complemento?: string;
+    frete?: number;
+    tipo?: string;
   };
 }
 
@@ -40,7 +42,9 @@ const Pagamento = () => {
     return acc;
   }, []);
 
-  const totalPrice = groupedItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const subtotal = groupedItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const freteValue = endereco?.frete || 0;
+  const totalPrice = subtotal + freteValue;
 
   const handleFormaPagamentoChange = (forma: string) => {
     setFormaPagamento(forma);
@@ -75,6 +79,8 @@ const Pagamento = () => {
       formaPagamento,
       precisaTroco: formaPagamento === 'dinheiro' ? precisaTroco : false,
       trocoValue: formaPagamento === 'dinheiro' && precisaTroco ? trocoValue : null,
+      subtotal,
+      frete: freteValue,
       total: totalPrice
     });
 
@@ -90,7 +96,7 @@ const Pagamento = () => {
 
   if (!state) {
     return (
-      <div className="min-h-screen bg-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-red-50 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Erro: Dados não encontrados</h2>
           <Button onClick={() => navigate('/')}>
@@ -102,7 +108,7 @@ const Pagamento = () => {
   }
 
   return (
-    <div className="min-h-screen bg-orange-50">
+    <div className="min-h-screen bg-red-50">
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 py-4">
@@ -115,7 +121,7 @@ const Pagamento = () => {
               <ArrowLeft size={24} />
             </Button>
             <div className="flex items-center space-x-2">
-              <CreditCard className="text-orange-500" size={24} />
+              <CreditCard className="text-red-500" size={24} />
               <h1 className="text-xl font-bold text-gray-800">Pagamento</h1>
             </div>
           </div>
@@ -131,14 +137,14 @@ const Pagamento = () => {
             <div className="space-y-4 mb-6">
               {groupedItems.map((item) => (
                 <div key={item.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                  <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                  <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                     <span className="text-xl">{item.emoji}</span>
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-800">{item.name}</h4>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">Qtd: {item.quantity}</span>
-                      <span className="font-bold text-orange-600">
+                      <span className="font-bold text-red-600">
                         R$ {(item.price * item.quantity).toFixed(2)}
                       </span>
                     </div>
@@ -147,24 +153,46 @@ const Pagamento = () => {
               ))}
             </div>
 
-            <div className="border-t pt-4">
+            <div className="border-t pt-4 space-y-2">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold">Total:</span>
-                <span className="text-2xl font-bold text-orange-600">
+                <span className="text-lg font-semibold">Subtotal:</span>
+                <span className="text-lg font-bold text-gray-600">
+                  R$ {subtotal.toFixed(2)}
+                </span>
+              </div>
+              {freteValue > 0 && (
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-semibold">Frete:</span>
+                  <span className="text-lg font-bold text-gray-600">
+                    R$ {freteValue.toFixed(2)}
+                  </span>
+                </div>
+              )}
+              <div className="flex justify-between items-center border-t pt-2">
+                <span className="text-xl font-bold">Total:</span>
+                <span className="text-2xl font-bold text-red-600">
                   R$ {totalPrice.toFixed(2)}
                 </span>
               </div>
             </div>
 
             {/* Endereço */}
-            <div className="mt-6 p-4 bg-orange-50 rounded-lg">
-              <h3 className="font-semibold text-gray-800 mb-2">Endereço de Entrega:</h3>
-              <p className="text-gray-700">
-                {endereco?.rua}, {endereco?.numero}
-                {endereco?.complemento && ` - ${endereco.complemento}`}
-                <br />
-                {endereco?.bairro}
-              </p>
+            <div className="mt-6 p-4 bg-red-50 rounded-lg">
+              <h3 className="font-semibold text-gray-800 mb-2">
+                {endereco?.tipo === 'restaurante' ? 'Local:' : 'Endereço de Entrega:'}
+              </h3>
+              {endereco?.tipo === 'restaurante' ? (
+                <p className="text-gray-700">
+                  Rua dos Hamburgers, 456 - Centro - São Paulo
+                </p>
+              ) : (
+                <p className="text-gray-700">
+                  {endereco?.rua}, {endereco?.numero}
+                  {endereco?.complemento && ` - ${endereco.complemento}`}
+                  <br />
+                  {endereco?.bairro}
+                </p>
+              )}
             </div>
           </div>
 
@@ -178,7 +206,7 @@ const Pagamento = () => {
                 onClick={() => handleFormaPagamentoChange('cartao')}
                 className={`w-full p-4 rounded-lg border-2 transition-all ${
                   formaPagamento === 'cartao'
-                    ? 'border-orange-500 bg-orange-50'
+                    ? 'border-red-500 bg-red-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -196,7 +224,7 @@ const Pagamento = () => {
                 onClick={() => handleFormaPagamentoChange('pix')}
                 className={`w-full p-4 rounded-lg border-2 transition-all ${
                   formaPagamento === 'pix'
-                    ? 'border-orange-500 bg-orange-50'
+                    ? 'border-red-500 bg-red-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -214,7 +242,7 @@ const Pagamento = () => {
                 onClick={() => handleFormaPagamentoChange('dinheiro')}
                 className={`w-full p-4 rounded-lg border-2 transition-all ${
                   formaPagamento === 'dinheiro'
-                    ? 'border-orange-500 bg-orange-50'
+                    ? 'border-red-500 bg-red-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -236,7 +264,7 @@ const Pagamento = () => {
                       id="precisaTroco"
                       checked={precisaTroco}
                       onChange={(e) => setPrecisaTroco(e.target.checked)}
-                      className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded"
+                      className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded"
                     />
                     <Label htmlFor="precisaTroco" className="text-gray-700">
                       Preciso de troco
@@ -266,7 +294,7 @@ const Pagamento = () => {
             <div className="mt-8">
               <Button
                 onClick={handleFinalizarPedido}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-medium"
+                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium"
               >
                 Finalizar Pedido
               </Button>
