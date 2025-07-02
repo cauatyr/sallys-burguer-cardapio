@@ -27,9 +27,26 @@ const Index = () => {
     console.log('Item adicionado ao carrinho:', item.name);
   };
 
+  const handleRemoveFromCart = (itemId: string) => {
+    setCartItems(prev => {
+      const itemIndex = prev.findIndex(item => item.id === itemId);
+      if (itemIndex > -1) {
+        const newCart = [...prev];
+        newCart.splice(itemIndex, 1);
+        return newCart;
+      }
+      return prev;
+    });
+    console.log('Item removido do carrinho');
+  };
+
   return (
     <div className="min-h-screen bg-red-50">
-      <Header cartItemsCount={cartItems.length} cartItems={cartItems} />
+      <Header 
+        cartItemsCount={cartItems.length} 
+        cartItems={cartItems} 
+        onRemoveFromCart={handleRemoveFromCart}
+      />
       
       {/* Hero Section */}
       <section className="py-16 px-4 text-center bg-red-600 text-white relative overflow-hidden">

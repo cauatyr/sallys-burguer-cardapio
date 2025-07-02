@@ -18,14 +18,28 @@ const Endereco = () => {
     numero: '',
     complemento: ''
   });
+  const [freteValue, setFreteValue] = useState(0);
 
   const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+
+  const bairrosComFrete = [
+    { name: 'Marthy', value: 7 },
+    { name: 'Eliseu', value: 4 },
+    { name: 'Minalice', value: 5 },
+    { name: 'Nitra', value: 0 },
+    { name: 'Kartryn', value: 9 }
+  ];
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
+
+    if (field === 'bairro') {
+      const bairroSelecionado = bairrosComFrete.find(b => b.name === value);
+      setFreteValue(bairroSelecionado ? bairroSelecionado.value : 0);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -50,8 +64,8 @@ const Endereco = () => {
     }
 
     const enderecoData = tipoServico === 'restaurante' 
-      ? { tipo: 'restaurante', endereco: 'Rua dos Hamburgers, 456 - Centro - São Paulo' }
-      : { tipo: 'delivery', ...formData };
+      ? { tipo: 'restaurante', endereco: 'Rua dos Hamburgers, 456 - Centro - São Paulo', frete: 0 }
+      : { tipo: 'delivery', ...formData, frete: freteValue };
 
     console.log('Dados do endereço:', enderecoData);
     
@@ -135,15 +149,23 @@ const Endereco = () => {
                     <Label htmlFor="bairro" className="text-sm font-medium text-gray-700">
                       Bairro *
                     </Label>
-                    <Input
-                      id="bairro"
-                      type="text"
-                      value={formData.bairro}
-                      onChange={(e) => handleInputChange('bairro', e.target.value)}
-                      placeholder="Ex: Centro"
-                      className="w-full transition-all duration-300 focus:scale-105"
-                      required
-                    />
+                    <Select value={formData.bairro} onValueChange={(value) => handleInputChange('bairro', value)}>
+                      <SelectTrigger className="w-full transition-all duration-300 focus:scale-105">
+                        <SelectValue placeholder="Selecione seu bairro" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {bairrosComFrete.map((bairro) => (
+                          <SelectItem key={bairro.name} value={bairro.name}>
+                            {bairro.name} - {bairro.value === 0 ? 'Frete Grátis' : `R$ ${bairro.value},00`}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {formData.bairro && (
+                      <div className="text-sm text-green-600 font-medium">
+                        Frete: {freteValue === 0 ? 'Grátis!' : `R$ ${freteValue},00`}
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -198,7 +220,7 @@ const Endereco = () => {
             <div className="pt-6">
               <Button 
                 type="submit"
-                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-300 hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/30 animate-pulse"
+                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-300 hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/30"
               >
                 Seguir para a forma de pagamento
               </Button>

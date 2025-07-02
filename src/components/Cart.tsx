@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { X, Minus, Plus, ShoppingCart } from 'lucide-react';
+import { X, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { Button } from './ui/button';
 import { MenuItem } from '../types/menu';
@@ -12,10 +12,11 @@ interface CartItem extends MenuItem {
 
 interface CartProps {
   cartItems: MenuItem[];
+  onRemoveItem?: (itemId: string) => void;
   children: React.ReactNode;
 }
 
-const Cart = ({ cartItems, children }: CartProps) => {
+const Cart = ({ cartItems, onRemoveItem, children }: CartProps) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,6 +37,12 @@ const Cart = ({ cartItems, children }: CartProps) => {
   }, []);
 
   const totalPrice = groupedItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+  const handleRemoveItem = (itemId: string) => {
+    if (onRemoveItem) {
+      onRemoveItem(itemId);
+    }
+  };
 
   const handleContinueOrder = () => {
     setIsOpen(false);
@@ -68,12 +75,30 @@ const Cart = ({ cartItems, children }: CartProps) => {
                 {groupedItems.map((item) => (
                   <div key={item.id} className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-300">
                     <div className="flex items-start space-x-3">
-                      <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center">
-                        <span className="text-2xl">{item.emoji}</span>
+                      <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center overflow-hidden">
+                        {item.image ? (
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-2xl">{item.emoji}</span>
+                        )}
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-semibold text-gray-800">{item.name}</h4>
-                        <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h4 className="font-semibold text-gray-800">{item.name}</h4>
+                            <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
+                          </div>
+                          <button
+                            onClick={() => handleRemoveItem(item.id)}
+                            className="p-1 text-red-500 hover:bg-red-100 rounded-full transition-colors duration-200"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                         <div className="flex items-center justify-between mt-2">
                           <span className="font-bold text-red-600">
                             R$ {(item.price * item.quantity).toFixed(2)}
@@ -98,7 +123,7 @@ const Cart = ({ cartItems, children }: CartProps) => {
                 
                 <Button 
                   onClick={handleContinueOrder}
-                  className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-500 hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/30 animate-pulse hover:animate-none relative overflow-hidden group"
+                  className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-500 hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/30 relative overflow-hidden group"
                 >
                   <span className="relative z-10">Continuar o Pedido</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
