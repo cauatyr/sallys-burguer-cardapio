@@ -184,7 +184,7 @@ export const menuData: MenuItem[] = [
     name: 'Guaraná',
     description: 'Guaraná Antarctica gelado em lata 350ml.',
     price: 6.90,
-    image: '/lovable-uploads/3bed822b-822c-4be2-b696-838c80ba713c.png',
+    image: '/lovable-uploads/ccb8a645-783c-42f0-be40-6dd47731c6aa.png',
     emoji: '🥤',
     category: 'bebidas',
     categoryName: 'Bebidas',
