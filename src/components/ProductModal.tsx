@@ -42,7 +42,7 @@ const ProductModal = ({ item, isOpen, onClose, onAddToCart }: ProductModalProps)
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 onError={() => setImageError(true)}
               />
             ) : (
