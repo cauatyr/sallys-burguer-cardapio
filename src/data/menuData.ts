@@ -9,6 +9,7 @@ export const menuData: MenuItem[] = [
     description: 'Hambúrguer artesanal de 150g, queijo cheddar, alface, tomate, cebola e molho especial.',
     price: 28.90,
     originalPrice: 32.90,
+    image: '/lovable-uploads/49c0a859-5a21-4194-81bb-49836074cdd7.png',
     emoji: '🍔',
     category: 'pratos',
     categoryName: 'Hamburgers',
@@ -20,6 +21,7 @@ export const menuData: MenuItem[] = [
     name: 'Bacon Cheese Burger',
     description: 'Hambúrguer duplo com bacon crocante, queijo cheddar derretido e molho barbecue.',
     price: 34.90,
+    image: '/lovable-uploads/8496b13d-82ff-49b3-b98a-3e626ef3f3e5.png',
     emoji: '🥓',
     category: 'pratos',
     categoryName: 'Hamburgers',
@@ -49,14 +51,27 @@ export const menuData: MenuItem[] = [
     tags: ['Frango', 'Crocante']
   },
   {
-    id: '4',
-    name: 'Veggie Burger',
-    description: 'Hambúrguer vegano de grão-de-bico, rúcula, tomate seco e molho de tahine.',
-    price: 24.90,
-    emoji: '🥬',
+    id: '27',
+    name: 'Cachorro Quente',
+    description: 'Cachorro quente tradicional com salsicha, molho especial, queijo ralado e batata palha.',
+    price: 15.90,
+    image: '/lovable-uploads/f05d4b77-f2fc-4e40-b4b8-678b45aff76d.png',
+    emoji: '🌭',
     category: 'pratos',
     categoryName: 'Hamburgers',
-    tags: ['Vegano', 'Saudável'],
+    tags: ['Tradicional', 'Rápido'],
+    isNew: true
+  },
+  {
+    id: '28',
+    name: 'X-Tudo',
+    description: 'Hambúrguer completo com carne, presunto, queijo, ovo, bacon, alface, tomate e molho especial.',
+    price: 32.90,
+    image: '/lovable-uploads/c22325d7-02cc-4b1c-affb-b46604a957fa.png',
+    emoji: '🍔',
+    category: 'pratos',
+    categoryName: 'Hamburgers',
+    tags: ['Completo', 'Premium'],
     isNew: true
   },
 
@@ -156,6 +171,7 @@ export const menuData: MenuItem[] = [
     name: 'Pepsi',
     description: 'Pepsi gelada em lata 350ml.',
     price: 6.90,
+    image: '/lovable-uploads/cc776f06-1d15-4037-aa28-3414de860c1b.png',
     emoji: '🥤',
     category: 'bebidas',
     categoryName: 'Bebidas',
@@ -196,14 +212,40 @@ export const menuData: MenuItem[] = [
     tags: ['Cerveja', 'Importada']
   },
   {
-    id: '17',
-    name: 'Cerveja Skol',
-    description: 'Cerveja Skol lata 350ml gelada.',
-    price: 5.90,
+    id: '29',
+    name: 'Cerveja Budweiser Lata',
+    description: 'Cerveja Budweiser lata 350ml gelada.',
+    price: 7.90,
+    image: '/lovable-uploads/f1a239dd-12e3-428e-97dd-2f4fdcc7f300.png',
     emoji: '🍺',
     category: 'bebidas-alcoolicas',
     categoryName: 'Bebidas Alcoólicas',
-    tags: ['Cerveja', 'Nacional']
+    tags: ['Cerveja', 'Importada'],
+    isNew: true
+  },
+  {
+    id: '30',
+    name: 'Cerveja Brahma Lata',
+    description: 'Cerveja Brahma lata 350ml gelada.',
+    price: 5.90,
+    image: '/lovable-uploads/1fa5c119-bece-4346-ba28-8bb2d77283db.png',
+    emoji: '🍺',
+    category: 'bebidas-alcoolicas',
+    categoryName: 'Bebidas Alcoólicas',
+    tags: ['Cerveja', 'Nacional'],
+    isNew: true
+  },
+  {
+    id: '31',
+    name: 'Cerveja Boa',
+    description: 'Cerveja Antarctica lata 350ml gelada.',
+    price: 5.90,
+    image: '/lovable-uploads/04ce927c-a9f0-424f-aad3-10d35284c542.png',
+    emoji: '🍺',
+    category: 'bebidas-alcoolicas',
+    categoryName: 'Bebidas Alcoólicas',
+    tags: ['Cerveja', 'Nacional'],
+    isNew: true
   },
   {
     id: '18',
@@ -221,20 +263,11 @@ export const menuData: MenuItem[] = [
     name: 'Whisky Dose',
     description: 'Dose de whisky nacional com gelo.',
     price: 18.90,
+    image: '/lovable-uploads/0543b3ef-25bb-4eb5-8801-68ce9758c156.png',
     emoji: '🥃',
     category: 'bebidas-alcoolicas',
     categoryName: 'Bebidas Alcoólicas',
     tags: ['Whisky', 'Premium']
-  },
-  {
-    id: '20',
-    name: 'Vodka com Energético',
-    description: 'Vodka premium com energético Red Bull.',
-    price: 24.90,
-    emoji: '🍸',
-    category: 'bebidas-alcoolicas',
-    categoryName: 'Bebidas Alcoólicas',
-    tags: ['Vodka', 'Energético']
   },
 
   // Sobremesas
