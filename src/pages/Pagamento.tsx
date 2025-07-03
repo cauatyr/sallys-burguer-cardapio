@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Smartphone, Banknote } from 'lucide-react';
+import { ArrowLeft, CreditCard, Smartphone, Banknote, Loader2 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
@@ -30,6 +30,7 @@ const Pagamento = () => {
   const [formaPagamento, setFormaPagamento] = useState('');
   const [precisaTroco, setPrecisaTroco] = useState(false);
   const [trocoValue, setTrocoValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // Agrupar itens por ID e contar quantidades
   const groupedItems = cartItems.reduce((acc: any[], item) => {
@@ -100,7 +101,7 @@ const Pagamento = () => {
     return encodeURIComponent(message);
   };
 
-  const handleFinalizarPedido = () => {
+  const handleFinalizarPedido = async () => {
     if (!formaPagamento) {
       toast({
         title: "Selecione uma forma de pagamento",
@@ -119,6 +120,11 @@ const Pagamento = () => {
       return;
     }
 
+    setIsLoading(true);
+
+    // Simular um pequeno delay para mostrar a animação
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
     const whatsappMessage = formatWhatsAppMessage();
     const whatsappUrl = `https://wa.me/5517992647180?text=${whatsappMessage}`;
     
@@ -128,6 +134,8 @@ const Pagamento = () => {
       title: "Pedido enviado!",
       description: "Você será redirecionado para o WhatsApp.",
     });
+
+    setIsLoading(false);
   };
 
   if (!state) {
@@ -330,9 +338,17 @@ const Pagamento = () => {
             <div className="mt-8">
               <Button
                 onClick={handleFinalizarPedido}
-                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium"
+                disabled={isLoading}
+                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300"
               >
-                Finalizar Pedido
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Enviando pedido...
+                  </>
+                ) : (
+                  'Finalizar Pedido'
+                )}
               </Button>
             </div>
           </div>
