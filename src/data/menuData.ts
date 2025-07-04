@@ -129,7 +129,7 @@ export const menuData: MenuItem[] = [
     name: 'Água sem Gás',
     description: 'Água mineral natural gelada.',
     price: 3.90,
-    image: '/lovable-uploads/1561dfa4-fcae-444d-9e9b-06e01a160d5c.png',
+    image: '/lovable-uploads/fd66bcde-4d29-49a0-abb9-1a1e8c547de5.png',
     emoji: '💦',
     category: 'bebidas',
     categoryName: 'Bebidas',
@@ -240,7 +240,7 @@ export const menuData: MenuItem[] = [
   },
   {
     id: '31',
-    name: 'Cerveja Boa',
+    name: 'Cerveja Antarctica',
     description: 'Cerveja Antarctica lata 350ml gelada.',
     price: 5.90,
     image: '/lovable-uploads/04ce927c-a9f0-424f-aad3-10d35284c542.png',

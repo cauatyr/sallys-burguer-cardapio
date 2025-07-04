@@ -63,15 +63,15 @@ const Cart = ({ cartItems, onRemoveItem, children }: CartProps) => {
       <SheetTrigger asChild>
         {children}
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-md">
-        <SheetHeader>
+      <SheetContent className="w-full sm:max-w-md flex flex-col h-full">
+        <SheetHeader className="flex-shrink-0">
           <SheetTitle className="flex items-center space-x-2">
             <ShoppingCart size={24} />
             <span>Meu Carrinho</span>
           </SheetTitle>
         </SheetHeader>
 
-        <div className="flex flex-col h-full mt-6">
+        <div className="flex flex-col flex-1 mt-6 min-h-0">
           {groupedItems.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center">
               <div className="text-6xl mb-4">🛒</div>
@@ -80,11 +80,11 @@ const Cart = ({ cartItems, onRemoveItem, children }: CartProps) => {
             </div>
           ) : (
             <>
-              <div className="flex-1 overflow-y-auto space-y-4">
+              <div className="flex-1 overflow-y-auto space-y-4 pr-2">
                 {groupedItems.map((item) => (
                   <div key={item.id} className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-300">
                     <div className="flex items-start space-x-3">
-                      <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center overflow-hidden">
+                      <div className="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
                         {item.image ? (
                           <img
                             src={item.image}
@@ -95,20 +95,20 @@ const Cart = ({ cartItems, onRemoveItem, children }: CartProps) => {
                           <span className="text-2xl">{item.emoji}</span>
                         )}
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <h4 className="font-semibold text-gray-800">{item.name}</h4>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-semibold text-gray-800 truncate">{item.name}</h4>
                             <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
                           </div>
                           <button
                             onClick={() => handleRemoveAll(item.id)}
-                            className="p-1 text-red-500 hover:bg-red-100 rounded-full transition-colors duration-200"
+                            className="p-1 text-red-500 hover:bg-red-100 rounded-full transition-colors duration-200 flex-shrink-0 ml-2"
                           >
                             <Trash2 size={16} />
                           </button>
                         </div>
-                        <div className="flex items-center justify-between mt-2">
+                        <div className="flex items-center justify-between">
                           <span className="font-bold text-red-600">
                             R$ {(item.price * item.quantity).toFixed(2)}
                           </span>
@@ -140,7 +140,7 @@ const Cart = ({ cartItems, onRemoveItem, children }: CartProps) => {
                 ))}
               </div>
 
-              <div className="border-t pt-4 mt-4">
+              <div className="border-t pt-4 mt-4 flex-shrink-0 bg-white">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-lg font-semibold">Total:</span>
                   <span className="text-2xl font-bold text-red-600">

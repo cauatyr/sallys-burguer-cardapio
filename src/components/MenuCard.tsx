@@ -38,8 +38,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-              onError={() => setImageError(true)}
+              className="w-full h-full object-contain"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
