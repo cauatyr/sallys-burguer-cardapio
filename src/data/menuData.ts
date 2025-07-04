@@ -112,13 +112,13 @@ export const menuData: MenuItem[] = [
     isNew: true
   },
 
-  // Bebidas Não Alcoólicas
+  // Bebidas Não Alcoólicas - Updated images
   {
     id: '8',
     name: 'Água com Gás',
     description: 'Água mineral com gás gelada.',
     price: 4.90,
-    image: '/lovable-uploads/85031767-eace-4e9a-85c9-341006743eed.png',
+    image: '/lovable-uploads/24f175b9-69e6-49eb-bac5-670aae3e7947.png',
     emoji: '💧',
     category: 'bebidas',
     categoryName: 'Bebidas',
@@ -162,7 +162,7 @@ export const menuData: MenuItem[] = [
     name: 'Coca-Cola 2L',
     description: 'Coca-Cola tradicional garrafa 2 litros.',
     price: 12.90,
-    image: '/lovable-uploads/42aa6a2a-87ad-482a-9339-1ed0a6395a08.png',
+    image: '/lovable-uploads/8cff91ed-f69b-4806-abb1-a832ccc407b1.png',
     emoji: '🥤',
     category: 'bebidas',
     categoryName: 'Bebidas',

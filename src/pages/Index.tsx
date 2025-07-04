@@ -48,12 +48,12 @@ const Index = () => {
         onRemoveFromCart={handleRemoveFromCart}
       />
       
-      {/* Hero Section com Banner */}
-      <section className="relative w-full h-96 overflow-hidden">
+      {/* Hero Section com Banner - Responsivo */}
+      <section className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
         <img
           src="/lovable-uploads/ae42da5f-24e1-457f-bcec-d2de3534ba58.png"
           alt="Sally's Burger Banner"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover sm:object-contain"
         />
       </section>
 

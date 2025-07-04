@@ -53,16 +53,31 @@ const Header = ({ cartItemsCount = 0, cartItems = [], onRemoveFromCart }: Header
             </Cart>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile Navigation - Cart and Menu Button */}
+          <div className="md:hidden flex items-center space-x-3">
+            {/* Cart Button - Outside of hamburger menu */}
+            <Cart cartItems={cartItems} onRemoveItem={onRemoveFromCart}>
+              <button className="relative bg-red-600 hover:bg-red-700 text-white p-2 rounded-full font-medium transition-all duration-300 hover:scale-110">
+                <ShoppingCart size={18} />
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-yellow-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center text-[10px]">
+                    {cartItemsCount}
+                  </span>
+                )}
+              </button>
+            </Cart>
+            
+            {/* Hamburger Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation Menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t animate-fade-in">
             <nav className="flex flex-col space-y-4">
@@ -75,17 +90,6 @@ const Header = ({ cartItemsCount = 0, cartItems = [], onRemoveFromCart }: Header
               <a href="#contato" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
                 Contato
               </a>
-              <Cart cartItems={cartItems} onRemoveItem={onRemoveFromCart}>
-                <button className="relative bg-red-600 hover:bg-red-700 text-white p-3 rounded-full font-medium transition-all duration-300 hover:scale-110 w-fit flex items-center space-x-2">
-                  <ShoppingCart size={20} />
-                  <span>Carrinho</span>
-                  {cartItemsCount > 0 && (
-                    <span className="bg-yellow-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center">
-                      {cartItemsCount}
-                    </span>
-                  )}
-                </button>
-              </Cart>
             </nav>
           </div>
         )}
