@@ -100,7 +100,7 @@ const Endereco = () => {
 
       {/* Form */}
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
+        <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 border-2 border-[#009639]">
           <div className="mb-8 text-center">
             <div className="text-4xl mb-4">📍</div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Como você vai consumir?</h2>
@@ -114,7 +114,7 @@ const Endereco = () => {
                 Tipo de Serviço *
               </Label>
               <Select value={tipoServico} onValueChange={setTipoServico}>
-                <SelectTrigger className="w-full transition-all duration-300 focus:scale-105">
+                <SelectTrigger className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]">
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
                 <SelectContent>
@@ -126,7 +126,7 @@ const Endereco = () => {
 
             {/* Endereço do Restaurante */}
             {tipoServico === 'restaurante' && (
-              <div className="bg-red-50 p-6 rounded-lg border border-red-200 animate-fade-in">
+              <div className="bg-red-50 p-6 rounded-lg border-2 border-[#009639] animate-fade-in">
                 <h3 className="font-semibold text-red-800 mb-2 flex items-center">
                   <span className="mr-2">🏪</span>
                   Endereço do Restaurante
@@ -143,14 +143,14 @@ const Endereco = () => {
 
             {/* Formulário de Delivery */}
             {tipoServico === 'delivery' && (
-              <div className="animate-fade-in">
+              <div className="animate-fade-in space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="bairro" className="text-sm font-medium text-gray-700">
                       Bairro *
                     </Label>
                     <Select value={formData.bairro} onValueChange={(value) => handleInputChange('bairro', value)}>
-                      <SelectTrigger className="w-full transition-all duration-300 focus:scale-105">
+                      <SelectTrigger className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]">
                         <SelectValue placeholder="Selecione seu bairro" />
                       </SelectTrigger>
                       <SelectContent>
@@ -178,13 +178,13 @@ const Endereco = () => {
                       value={formData.rua}
                       onChange={(e) => handleInputChange('rua', e.target.value)}
                       placeholder="Ex: Rua das Flores"
-                      className="w-full transition-all duration-300 focus:scale-105"
+                      className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]"
                       required
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="numero" className="text-sm font-medium text-gray-700">
                       Número *
@@ -195,7 +195,7 @@ const Endereco = () => {
                       value={formData.numero}
                       onChange={(e) => handleInputChange('numero', e.target.value)}
                       placeholder="Ex: 123"
-                      className="w-full transition-all duration-300 focus:scale-105"
+                      className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]"
                       required
                     />
                   </div>
@@ -210,7 +210,7 @@ const Endereco = () => {
                       value={formData.complemento}
                       onChange={(e) => handleInputChange('complemento', e.target.value)}
                       placeholder="Ex: Apto 101, Bloco A"
-                      className="w-full transition-all duration-300 focus:scale-105"
+                      className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]"
                     />
                   </div>
                 </div>
@@ -220,7 +220,7 @@ const Endereco = () => {
             <div className="pt-6">
               <Button 
                 type="submit"
-                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-300 hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/30"
+                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-300 hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/30 border-2 border-[#009639]"
               >
                 Seguir para a forma de pagamento
               </Button>

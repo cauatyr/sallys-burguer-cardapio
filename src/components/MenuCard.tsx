@@ -29,7 +29,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
     <>
       <div 
         onClick={handleCardClick}
-        className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden animate-fade-in group cursor-pointer hover:scale-105"
+        className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden animate-fade-in group cursor-pointer hover:scale-105 border-2 border-[#009639]"
         style={{ animationDelay: `${delay}s` }}
       >
         {/* Image */}
@@ -52,7 +52,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
               e.stopPropagation();
               setIsFavorite(!isFavorite);
             }}
-            className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 hover:scale-110 shadow-md"
+            className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 hover:scale-110 shadow-md border border-[#009639]"
           >
             <Heart
               size={20}
@@ -63,7 +63,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
           </button>
 
           {/* Category Badge */}
-          <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+          <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg border border-[#009639]">
             {item.categoryName}
           </div>
         </div>
@@ -96,7 +96,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
               {item.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full hover:bg-red-100 transition-colors duration-300"
+                  className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full hover:bg-red-100 transition-colors duration-300 border border-[#009639]"
                 >
                   {tag}
                 </span>
@@ -110,7 +110,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
               e.stopPropagation();
               handleAddToCart();
             }}
-            className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/20"
+            className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/20 border-2 border-[#009639]"
           >
             <Plus size={20} />
             <span>Adicionar ao Pedido</span>
