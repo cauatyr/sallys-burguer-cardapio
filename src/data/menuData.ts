@@ -1,4 +1,3 @@
-
 import { MenuItem } from '../types/menu';
 
 export const menuData: MenuItem[] = [
@@ -173,7 +172,7 @@ export const menuData: MenuItem[] = [
     name: 'Pepsi',
     description: 'Pepsi gelada em lata 350ml.',
     price: 6.90,
-    image: '/lovable-uploads/cc776f06-1d15-4037-aa28-3414de860c1b.png',
+    image: '/lovable-uploads/4518f270-c040-4563-b921-6073b0231c5b.png',
     emoji: '🥤',
     category: 'bebidas',
     categoryName: 'Bebidas',
@@ -219,7 +218,7 @@ export const menuData: MenuItem[] = [
     name: 'Cerveja Budweiser Lata',
     description: 'Cerveja Budweiser lata 350ml gelada.',
     price: 7.90,
-    image: '/lovable-uploads/f1a239dd-12e3-428e-97dd-2f4fdcc7f300.png',
+    image: '/lovable-uploads/d8b1437e-03ed-4321-9b21-24e72154a0cb.png',
     emoji: '🍺',
     category: 'bebidas-alcoolicas',
     categoryName: 'Bebidas Alcoólicas',

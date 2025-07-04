@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Header from '../components/Header';
 import MenuCategory from '../components/MenuCategory';
@@ -48,13 +47,25 @@ const Index = () => {
         onRemoveFromCart={handleRemoveFromCart}
       />
       
-      {/* Hero Section com Banner - Responsivo */}
-      <section className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
-        <img
-          src="/lovable-uploads/ae42da5f-24e1-457f-bcec-d2de3534ba58.png"
-          alt="Sally's Burger Banner"
-          className="w-full h-full object-cover sm:object-contain"
-        />
+      {/* Hero Section com Banner - Responsivo com duas resoluções */}
+      <section className="relative w-full overflow-hidden">
+        {/* Mobile: altura menor com object-cover */}
+        <div className="block md:hidden h-48 sm:h-64">
+          <img
+            src="/lovable-uploads/ae42da5f-24e1-457f-bcec-d2de3534ba58.png"
+            alt="Sally's Burger Banner"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Desktop: altura maior com object-cover para preencher sem espaços em branco */}
+        <div className="hidden md:block h-80 lg:h-96 xl:h-[500px]">
+          <img
+            src="/lovable-uploads/ae42da5f-24e1-457f-bcec-d2de3534ba58.png"
+            alt="Sally's Burger Banner"
+            className="w-full h-full object-cover"
+          />
+        </div>
       </section>
 
       {/* Category Navigation */}
