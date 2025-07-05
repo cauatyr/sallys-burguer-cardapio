@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/button';
@@ -20,17 +20,26 @@ const Endereco = () => {
   });
   const [freteValue, setFreteValue] = useState(0);
 
-  const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+  // Memoize cart items to prevent unnecessary re-renders
+  const cartItems = useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem('cartItems') || '[]');
+    } catch (error) {
+      console.error('Error parsing cart items:', error);
+      return [];
+    }
+  }, []);
 
-  const bairrosComFrete = [
+  const bairrosComFrete = useMemo(() => [
     { name: 'Marthy', value: 7 },
     { name: 'Eliseu', value: 4 },
     { name: 'Minalice', value: 5 },
     { name: 'Nitra', value: 0 },
     { name: 'Kartryn', value: 9 }
-  ];
+  ], []);
 
-  const handleInputChange = (field: string, value: string) => {
+  // Optimize input change handler with useCallback
+  const handleInputChange = useCallback((field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -40,9 +49,25 @@ const Endereco = () => {
       const bairroSelecionado = bairrosComFrete.find(b => b.name === value);
       setFreteValue(bairroSelecionado ? bairroSelecionado.value : 0);
     }
-  };
+  }, [bairrosComFrete]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Optimize tipo servico handler
+  const handleTipoServicoChange = useCallback((value: string) => {
+    setTipoServico(value);
+    // Reset form data when changing service type to prevent conflicts
+    if (value === 'restaurante') {
+      setFormData({
+        bairro: '',
+        rua: '',
+        numero: '',
+        complemento: ''
+      });
+      setFreteValue(0);
+    }
+  }, []);
+
+  // Optimize submit handler
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     
     if (!tipoServico) {
@@ -69,13 +94,21 @@ const Endereco = () => {
 
     console.log('Dados do endereço:', enderecoData);
     
-    navigate('/pagamento', {
-      state: {
-        cartItems,
-        endereco: enderecoData
-      }
-    });
-  };
+    // Use setTimeout to prevent blocking the UI on navigation
+    setTimeout(() => {
+      navigate('/pagamento', {
+        state: {
+          cartItems,
+          endereco: enderecoData
+        }
+      });
+    }, 100);
+  }, [tipoServico, formData, freteValue, cartItems, navigate, toast]);
+
+  // Optimize back navigation
+  const handleBackNavigation = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-red-50">
@@ -85,8 +118,9 @@ const Endereco = () => {
           <div className="flex items-center space-x-4">
             <Button
               variant="ghost"
-              onClick={() => navigate('/')}
-              className="p-2 hover:scale-105 transition-transform duration-300"
+              onClick={handleBackNavigation}
+              className="p-2 hover:scale-105 transition-transform duration-200"
+              type="button"
             >
               <ArrowLeft size={24} />
             </Button>
@@ -100,21 +134,21 @@ const Endereco = () => {
 
       {/* Form */}
       <div className="max-w-2xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 border-2 border-[#009639]">
+        <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-200">
           <div className="mb-8 text-center">
             <div className="text-4xl mb-4">📍</div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Como você vai consumir?</h2>
             <p className="text-gray-600">Escolha se vai comer no restaurante ou receber em casa</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" noValidate>
             {/* Tipo de Serviço */}
             <div className="space-y-2">
               <Label htmlFor="tipoServico" className="text-sm font-medium text-gray-700">
                 Tipo de Serviço *
               </Label>
-              <Select value={tipoServico} onValueChange={setTipoServico}>
-                <SelectTrigger className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]">
+              <Select value={tipoServico} onValueChange={handleTipoServicoChange}>
+                <SelectTrigger className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500">
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
                 <SelectContent>
@@ -126,7 +160,7 @@ const Endereco = () => {
 
             {/* Endereço do Restaurante */}
             {tipoServico === 'restaurante' && (
-              <div className="bg-red-50 p-6 rounded-lg border-2 border-[#009639] animate-fade-in">
+              <div className="bg-red-50 p-6 rounded-lg border-2 border-red-200 animate-fade-in">
                 <h3 className="font-semibold text-red-800 mb-2 flex items-center">
                   <span className="mr-2">🏪</span>
                   Endereço do Restaurante
@@ -150,7 +184,7 @@ const Endereco = () => {
                       Bairro *
                     </Label>
                     <Select value={formData.bairro} onValueChange={(value) => handleInputChange('bairro', value)}>
-                      <SelectTrigger className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]">
+                      <SelectTrigger className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500">
                         <SelectValue placeholder="Selecione seu bairro" />
                       </SelectTrigger>
                       <SelectContent>
@@ -178,8 +212,8 @@ const Endereco = () => {
                       value={formData.rua}
                       onChange={(e) => handleInputChange('rua', e.target.value)}
                       placeholder="Ex: Rua das Flores"
-                      className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]"
-                      required
+                      className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
+                      autoComplete="street-address"
                     />
                   </div>
                 </div>
@@ -195,8 +229,8 @@ const Endereco = () => {
                       value={formData.numero}
                       onChange={(e) => handleInputChange('numero', e.target.value)}
                       placeholder="Ex: 123"
-                      className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]"
-                      required
+                      className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
+                      autoComplete="off"
                     />
                   </div>
 
@@ -210,7 +244,8 @@ const Endereco = () => {
                       value={formData.complemento}
                       onChange={(e) => handleInputChange('complemento', e.target.value)}
                       placeholder="Ex: Apto 101, Bloco A"
-                      className="w-full transition-all duration-300 focus:scale-105 border-2 border-[#009639] focus:border-[#009639]"
+                      className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
+                      autoComplete="off"
                     />
                   </div>
                 </div>
@@ -220,7 +255,8 @@ const Endereco = () => {
             <div className="pt-6">
               <Button 
                 type="submit"
-                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-300 hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/30 border-2 border-[#009639]"
+                className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-200 hover:scale-[1.02] transform hover:shadow-lg hover:shadow-red-500/20"
+                disabled={!tipoServico}
               >
                 Seguir para a forma de pagamento
               </Button>
