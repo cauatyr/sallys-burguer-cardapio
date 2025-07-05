@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
-import { Heart, Plus } from 'lucide-react';
+import { Heart, Plus, Check } from 'lucide-react';
 import { MenuItem } from '../types/menu';
 import ProductModal from './ProductModal';
+import { useToast } from '@/hooks/use-toast';
 
 interface MenuCardProps {
   item: MenuItem;
@@ -14,11 +15,27 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const { toast } = useToast();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    setIsAdding(true);
+    
     if (onAddToCart) {
       onAddToCart(item);
     }
+
+    // Mostrar toast de sucesso
+    toast({
+      title: "Item adicionado!",
+      description: `${item.name} foi adicionado ao carrinho`,
+      duration: 2000,
+    });
+
+    // Reset do estado após a animação
+    setTimeout(() => {
+      setIsAdding(false);
+    }, 1000);
   };
 
   const handleCardClick = () => {
@@ -29,10 +46,9 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
     <>
       <div 
         onClick={handleCardClick}
-        className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden animate-fade-in group cursor-pointer hover:scale-105 border-2"
+        className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden animate-fade-in group cursor-pointer hover:scale-105"
         style={{ 
-          animationDelay: `${delay}s`,
-          borderColor: '#009639'
+          animationDelay: `${delay}s`
         }}
       >
         {/* Image */}
@@ -56,7 +72,6 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
               setIsFavorite(!isFavorite);
             }}
             className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 hover:scale-110 shadow-md"
-            style={{ borderColor: '#009639', borderWidth: '1px' }}
           >
             <Heart
               size={20}
@@ -69,7 +84,6 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
           {/* Category Badge */}
           <div 
             className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg"
-            style={{ borderColor: '#009639', borderWidth: '1px' }}
           >
             {item.categoryName}
           </div>
@@ -104,7 +118,6 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
                 <span
                   key={index}
                   className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full hover:bg-red-100 transition-colors duration-300"
-                  style={{ borderColor: '#009639', borderWidth: '1px' }}
                 >
                   {tag}
                 </span>
@@ -118,11 +131,24 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
               e.stopPropagation();
               handleAddToCart();
             }}
-            className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/20 border-2"
-            style={{ borderColor: '#009639' }}
+            disabled={isAdding}
+            className={`w-full font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/20 ${
+              isAdding 
+                ? 'bg-green-500 text-white scale-110' 
+                : 'bg-red-500 hover:bg-red-600 text-white'
+            }`}
           >
-            <Plus size={20} />
-            <span>Adicionar ao Pedido</span>
+            {isAdding ? (
+              <>
+                <Check size={20} className="animate-bounce" />
+                <span>Adicionado!</span>
+              </>
+            ) : (
+              <>
+                <Plus size={20} />
+                <span>Adicionar ao Pedido</span>
+              </>
+            )}
           </button>
         </div>
       </div>
