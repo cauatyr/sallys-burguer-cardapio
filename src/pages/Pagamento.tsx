@@ -56,15 +56,15 @@ const Pagamento = () => {
   };
 
   const formatWhatsAppMessage = () => {
-    let message = `Nome do cliente: ${nomeCliente}\n\n`;
+    let message = `Nome do cliente: ${nomeCliente || 'Cliente'}\n\n`;
     
     // Endereço
     if (endereco?.tipo === 'restaurante') {
       message += `Local: Rua dos Hamburgers, 456 - Centro - São Paulo\n\n`;
     } else {
-      message += `Endereço completo: ${endereco?.rua}, ${endereco?.numero}`;
+      message += `Endereço completo: ${endereco?.rua || ''}, ${endereco?.numero || ''}`;
       if (endereco?.complemento) message += ` - ${endereco.complemento}`;
-      message += `\n${endereco?.bairro}\n\n`;
+      message += `\n${endereco?.bairro || ''}\n\n`;
     }
     
     // Produtos
@@ -98,7 +98,47 @@ const Pagamento = () => {
     
     message += `Forma de pagamento: ${metodoPagamento}`;
     
-    return encodeURIComponent(message);
+    return message;
+  };
+
+  const detectMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  };
+
+  const detectIOS = () => {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent);
+  };
+
+  const openWhatsApp = (message: string) => {
+    const phoneNumber = '5517992647180';
+    const encodedMessage = encodeURIComponent(message);
+    
+    // URL para WhatsApp Web (desktop/alguns mobiles)
+    const whatsappWebUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+    
+    // URL para WhatsApp App (mobile)
+    const whatsappAppUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    
+    const isMobile = detectMobile();
+    const isIOS = detectIOS();
+    
+    if (isMobile) {
+      if (isIOS) {
+        // Para iOS: usar window.location.href em vez de window.open
+        window.location.href = whatsappAppUrl;
+      } else {
+        // Para Android: tentar abrir o app primeiro, senão usar web
+        try {
+          window.open(whatsappAppUrl, '_blank');
+        } catch (error) {
+          console.log('Fallback para WhatsApp Web:', error);
+          window.open(whatsappWebUrl, '_blank');
+        }
+      }
+    } else {
+      // Desktop: usar WhatsApp Web
+      window.open(whatsappWebUrl, '_blank');
+    }
   };
 
   const handleFinalizarPedido = async () => {
@@ -122,20 +162,35 @@ const Pagamento = () => {
 
     setIsLoading(true);
 
-    // Simular um pequeno delay para mostrar a animação
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      // Simular um pequeno delay para mostrar a animação
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const whatsappMessage = formatWhatsAppMessage();
-    const whatsappUrl = `https://wa.me/5517992647180?text=${whatsappMessage}`;
-    
-    window.open(whatsappUrl, '_blank');
+      const message = formatWhatsAppMessage();
+      
+      // Tentar abrir o WhatsApp
+      openWhatsApp(message);
 
-    toast({
-      title: "Pedido enviado!",
-      description: "Você será redirecionado para o WhatsApp.",
-    });
+      toast({
+        title: "Pedido enviado!",
+        description: "Você será redirecionado para o WhatsApp.",
+      });
 
-    setIsLoading(false);
+      // Delay adicional para iOS para garantir que o redirecionamento aconteça
+      if (detectIOS()) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+
+    } catch (error) {
+      console.error('Erro ao enviar pedido:', error);
+      toast({
+        title: "Erro ao enviar pedido",
+        description: "Tente novamente ou entre em contato conosco.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!state) {
