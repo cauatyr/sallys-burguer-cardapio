@@ -36,7 +36,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
         }}
       >
         {/* Image */}
-        <div className="relative h-48 bg-red-100 overflow-hidden">
+        <div className="relative h-48 overflow-hidden" style={{ backgroundColor: '#4A4A4A' }}>
           {!imageError && item.image ? (
             <img
               src={item.image}
