@@ -8,11 +8,20 @@
     <title>Sally's Burguer - Cardápio Online</title>
     <style>
       /* Hide Lovable badge */
-      [data-lovable-badge] {
+      [data-lovable-badge],
+      .lovable-badge,
+      [class*="lovable"],
+      [id*="lovable"],
+      div[style*="position: fixed"][style*="bottom"],
+      div[style*="position: fixed"][style*="right"],
+      a[href*="lovable.dev"],
+      *[aria-label*="lovable" i],
+      *[title*="lovable" i] {
         display: none !important;
-      }
-      .lovable-badge {
-        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        z-index: -9999 !important;
       }
     </style>
   </head>
@@ -20,19 +29,55 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      // Hide any Lovable branding
+      // Hide any Lovable branding - more aggressive approach
       document.addEventListener('DOMContentLoaded', function() {
         const hideBadge = () => {
-          const badges = document.querySelectorAll('[data-lovable-badge], .lovable-badge');
-          badges.forEach(badge => {
-            badge.style.display = 'none';
+          // Multiple selectors to catch all possible badge elements
+          const selectors = [
+            '[data-lovable-badge]',
+            '.lovable-badge',
+            '[class*="lovable"]',
+            '[id*="lovable"]',
+            'div[style*="position: fixed"][style*="bottom"]',
+            'div[style*="position: fixed"][style*="right"]',
+            'a[href*="lovable.dev"]',
+            '*[aria-label*="lovable" i]',
+            '*[title*="lovable" i]'
+          ];
+          
+          selectors.forEach(selector => {
+            try {
+              const elements = document.querySelectorAll(selector);
+              elements.forEach(element => {
+                element.style.display = 'none';
+                element.style.visibility = 'hidden';
+                element.style.opacity = '0';
+                element.style.pointerEvents = 'none';
+                element.style.zIndex = '-9999';
+                // Also try to remove the element completely
+                if (element.parentNode) {
+                  element.parentNode.removeChild(element);
+                }
+              });
+            } catch (e) {
+              // Ignore selector errors
+            }
           });
         };
         
+        // Run immediately
         hideBadge();
         
         // Check periodically for dynamically added badges
-        setInterval(hideBadge, 1000);
+        setInterval(hideBadge, 500);
+        
+        // Also check when DOM changes
+        const observer = new MutationObserver(hideBadge);
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true
+        });
       });
     </script>
   </body>
