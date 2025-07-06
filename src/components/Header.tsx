@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { MenuItem } from '../types/menu';
 import Cart from './Cart';
 
@@ -13,12 +14,16 @@ interface HeaderProps {
 const Header = ({ cartItemsCount = 0, cartItems = [], onRemoveFromCart }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
               <div className="text-white font-bold text-lg">
                 🍔
@@ -28,19 +33,19 @@ const Header = ({ cartItemsCount = 0, cartItems = [], onRemoveFromCart }: Header
               <h1 className="text-2xl font-bold text-gray-800">Sally's Burguer</h1>
               <p className="text-xs text-gray-500">Bar & Lanchonete</p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#cardapio" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
+            <Link to="/#cardapio" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
               Cardápio
-            </a>
-            <a href="#sobre" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
+            </Link>
+            <Link to="/sobre" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
               Sobre
-            </a>
-            <a href="#contato" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
+            </Link>
+            <Link to="/contato" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
               Contato
-            </a>
+            </Link>
             <Cart cartItems={cartItems} onRemoveItem={onRemoveFromCart}>
               <button className="relative bg-red-600 hover:bg-red-700 text-white p-3 rounded-full font-medium transition-all duration-300 hover:scale-110 hover:shadow-lg transform">
                 <ShoppingCart size={20} />
@@ -81,15 +86,27 @@ const Header = ({ cartItemsCount = 0, cartItems = [], onRemoveFromCart }: Header
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t animate-fade-in">
             <nav className="flex flex-col space-y-4">
-              <a href="#cardapio" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
+              <Link 
+                to="/#cardapio" 
+                onClick={handleLinkClick}
+                className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105"
+              >
                 Cardápio
-              </a>
-              <a href="#sobre" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
+              </Link>
+              <Link 
+                to="/sobre" 
+                onClick={handleLinkClick}
+                className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105"
+              >
                 Sobre
-              </a>
-              <a href="#contato" className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105">
+              </Link>
+              <Link 
+                to="/contato" 
+                onClick={handleLinkClick}
+                className="text-gray-700 hover:text-red-600 font-medium transition-all duration-300 hover:scale-105"
+              >
                 Contato
-              </a>
+              </Link>
             </nav>
           </div>
         )}
