@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin } from 'lucide-react';
@@ -12,6 +11,7 @@ const Endereco = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [tipoServico, setTipoServico] = useState('');
+  const [nomeCliente, setNomeCliente] = useState('');
   const [formData, setFormData] = useState({
     bairro: '',
     rua: '',
@@ -70,6 +70,15 @@ const Endereco = () => {
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!nomeCliente.trim()) {
+      toast({
+        title: "Nome obrigatório",
+        description: "Por favor, informe seu nome.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!tipoServico) {
       toast({
         title: "Selecione uma opção",
@@ -93,17 +102,19 @@ const Endereco = () => {
       : { tipo: 'delivery', ...formData, frete: freteValue };
 
     console.log('Dados do endereço:', enderecoData);
+    console.log('Nome do cliente:', nomeCliente);
     
     // Use setTimeout to prevent blocking the UI on navigation
     setTimeout(() => {
       navigate('/pagamento', {
         state: {
           cartItems,
-          endereco: enderecoData
+          endereco: enderecoData,
+          nomeCliente: nomeCliente.trim()
         }
       });
     }, 100);
-  }, [tipoServico, formData, freteValue, cartItems, navigate, toast]);
+  }, [tipoServico, formData, freteValue, cartItems, navigate, toast, nomeCliente]);
 
   // Optimize back navigation
   const handleBackNavigation = useCallback(() => {
@@ -137,11 +148,27 @@ const Endereco = () => {
         <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-200">
           <div className="mb-8 text-center">
             <div className="text-4xl mb-4">📍</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Como você vai consumir?</h2>
-            <p className="text-gray-600">Escolha se vai comer no restaurante ou receber em casa</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Dados do Pedido</h2>
+            <p className="text-gray-600">Informe seus dados e como você vai consumir</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            {/* Nome do Cliente */}
+            <div className="space-y-2">
+              <Label htmlFor="nomeCliente" className="text-sm font-medium text-gray-700">
+                Nome do Cliente *
+              </Label>
+              <Input
+                id="nomeCliente"
+                type="text"
+                value={nomeCliente}
+                onChange={(e) => setNomeCliente(e.target.value)}
+                placeholder="Digite seu nome completo"
+                className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
+                autoComplete="name"
+              />
+            </div>
+
             {/* Tipo de Serviço */}
             <div className="space-y-2">
               <Label htmlFor="tipoServico" className="text-sm font-medium text-gray-700">
@@ -256,7 +283,7 @@ const Endereco = () => {
               <Button 
                 type="submit"
                 className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-lg font-medium transition-all duration-200 hover:scale-[1.02] transform hover:shadow-lg hover:shadow-red-500/20"
-                disabled={!tipoServico}
+                disabled={!tipoServico || !nomeCliente.trim()}
               >
                 Seguir para a forma de pagamento
               </Button>
