@@ -110,7 +110,7 @@ const Pagamento = () => {
   };
 
   const openWhatsApp = (message: string) => {
-    const phoneNumber = '5517992647180';
+    const phoneNumber = '5517992071425';
     const encodedMessage = encodeURIComponent(message);
     
     // URL para WhatsApp Web (desktop/alguns mobiles)

@@ -8,14 +8,14 @@ const Contato = () => {
   const navigate = useNavigate();
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = '5517992647180';
+    const phoneNumber = '5517992071425';
     const message = encodeURIComponent('Olá! Gostaria de fazer um pedido no Sally\'s Burguer.');
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
 
   const handlePhoneClick = () => {
-    window.location.href = 'tel:+5517992647180';
+    window.location.href = 'tel:+5517992071425';
   };
 
   return (
@@ -73,7 +73,7 @@ const Contato = () => {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-2xl font-bold text-gray-800 mb-2">
-                  (17) 99264-7180
+                  (17) 99207-1425
                 </p>
                 <p className="text-gray-600 mb-4">
                   Faça seu pedido ou tire suas dúvidas
@@ -95,7 +95,7 @@ const Contato = () => {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-2xl font-bold text-gray-800 mb-2">
-                  (17) 99264-7180
+                  (17) 99207-1425
                 </p>
                 <p className="text-gray-600 mb-4">
                   Atendimento direto e rápido
