@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/button';
@@ -19,16 +19,31 @@ const Endereco = () => {
     complemento: ''
   });
   const [freteValue, setFreteValue] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+
+  // Client-side mounting detection to prevent SSR/Chrome mobile bugs
+  useEffect(() => {
+    console.log('[DeliverySelector] Component mounted on client');
+    setIsClient(true);
+  }, []);
 
   // Memoize cart items to prevent unnecessary re-renders
   const cartItems = useMemo(() => {
-    try {
-      return JSON.parse(localStorage.getItem('cartItems') || '[]');
-    } catch (error) {
-      console.error('Error parsing cart items:', error);
+    // Safe localStorage access with client-side check
+    if (typeof window === 'undefined' || !isClient) {
+      console.log('[DeliverySelector] localStorage not available, returning empty cart');
       return [];
     }
-  }, []);
+    
+    try {
+      const items = localStorage?.getItem?.('cartItems') || '[]';
+      console.log('[DeliverySelector] Cart items loaded from localStorage');
+      return JSON.parse(items);
+    } catch (error) {
+      console.error('[DeliverySelector] Error parsing cart items:', error);
+      return [];
+    }
+  }, [isClient]);
 
   const bairrosComFrete = useMemo(() => [
     { name: 'Marthy', value: 7 },
@@ -205,95 +220,97 @@ const Endereco = () => {
             )}
 
             {/* Formulário de Delivery */}
-            <div style={{ display: tipoServico === 'delivery' ? 'block' : 'none' }}>
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="bairro" className="text-sm font-medium text-gray-700">
-                      Bairro *
-                    </Label>
-                    <Select 
-                      value={formData.bairro} 
-                      onValueChange={(value) => {
-                        console.log('[DeliverySelector] Bairro selecionado:', value);
-                        handleInputChange('bairro', value);
-                      }}
-                    >
-                      <SelectTrigger className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500">
-                        <SelectValue placeholder="Selecione seu bairro" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {bairrosComFrete.map((bairro) => (
-                          <SelectItem key={bairro.name} value={bairro.name}>
-                            {bairro.name} - {bairro.value === 0 ? 'Frete Grátis' : `R$ ${bairro.value},00`}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {formData.bairro && (
-                      <div className="text-sm text-green-600 font-medium">
-                        Frete: {freteValue === 0 ? 'Grátis!' : `R$ ${freteValue},00`}
-                      </div>
-                    )}
+            <div style={{ display: isClient && tipoServico === 'delivery' ? 'block' : 'none' }}>
+              {isClient && tipoServico === 'delivery' && (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="bairro" className="text-sm font-medium text-gray-700">
+                        Bairro *
+                      </Label>
+                      <Select 
+                        value={formData.bairro} 
+                        onValueChange={(value) => {
+                          console.log('[DeliverySelector] Bairro selecionado:', value);
+                          handleInputChange('bairro', value);
+                        }}
+                      >
+                        <SelectTrigger className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500">
+                          <SelectValue placeholder="Selecione seu bairro" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {bairrosComFrete.map((bairro) => (
+                            <SelectItem key={bairro.name} value={bairro.name}>
+                              {bairro.name} - {bairro.value === 0 ? 'Frete Grátis' : `R$ ${bairro.value},00`}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {formData.bairro && (
+                        <div className="text-sm text-green-600 font-medium">
+                          Frete: {freteValue === 0 ? 'Grátis!' : `R$ ${freteValue},00`}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="rua" className="text-sm font-medium text-gray-700">
+                        Rua *
+                      </Label>
+                      <Input
+                        id="rua"
+                        type="text"
+                        value={formData.rua}
+                        onChange={(e) => {
+                          console.log('[DeliverySelector] Rua alterada:', e.target.value);
+                          handleInputChange('rua', e.target.value);
+                        }}
+                        placeholder="Ex: Rua das Flores"
+                        className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
+                        autoComplete="street-address"
+                      />
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="rua" className="text-sm font-medium text-gray-700">
-                      Rua *
-                    </Label>
-                    <Input
-                      id="rua"
-                      type="text"
-                      value={formData.rua}
-                      onChange={(e) => {
-                        console.log('[DeliverySelector] Rua alterada:', e.target.value);
-                        handleInputChange('rua', e.target.value);
-                      }}
-                      placeholder="Ex: Rua das Flores"
-                      className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
-                      autoComplete="street-address"
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="numero" className="text-sm font-medium text-gray-700">
+                        Número *
+                      </Label>
+                      <Input
+                        id="numero"
+                        type="text"
+                        value={formData.numero}
+                        onChange={(e) => {
+                          console.log('[DeliverySelector] Número alterado:', e.target.value);
+                          handleInputChange('numero', e.target.value);
+                        }}
+                        placeholder="Ex: 123"
+                        className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
+                        autoComplete="off"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="complemento" className="text-sm font-medium text-gray-700">
+                        Complemento
+                      </Label>
+                      <Input
+                        id="complemento"
+                        type="text"
+                        value={formData.complemento}
+                        onChange={(e) => {
+                          console.log('[DeliverySelector] Complemento alterado:', e.target.value);
+                          handleInputChange('complemento', e.target.value);
+                        }}
+                        placeholder="Ex: Apto 101, Bloco A"
+                        className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
+                        autoComplete="off"
+                      />
+                    </div>
                   </div>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="numero" className="text-sm font-medium text-gray-700">
-                      Número *
-                    </Label>
-                    <Input
-                      id="numero"
-                      type="text"
-                      value={formData.numero}
-                      onChange={(e) => {
-                        console.log('[DeliverySelector] Número alterado:', e.target.value);
-                        handleInputChange('numero', e.target.value);
-                      }}
-                      placeholder="Ex: 123"
-                      className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
-                      autoComplete="off"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="complemento" className="text-sm font-medium text-gray-700">
-                      Complemento
-                    </Label>
-                    <Input
-                      id="complemento"
-                      type="text"
-                      value={formData.complemento}
-                      onChange={(e) => {
-                        console.log('[DeliverySelector] Complemento alterado:', e.target.value);
-                        handleInputChange('complemento', e.target.value);
-                      }}
-                      placeholder="Ex: Apto 101, Bloco A"
-                      className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
-                      autoComplete="off"
-                    />
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
 
             <div className="pt-6">
