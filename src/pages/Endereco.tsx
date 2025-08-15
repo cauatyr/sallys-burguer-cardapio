@@ -53,9 +53,11 @@ const Endereco = () => {
 
   // Optimize tipo servico handler
   const handleTipoServicoChange = useCallback((value: string) => {
+    console.log('[DeliverySelector] Tipo serviço selecionado:', value);
     setTipoServico(value);
     // Reset form data when changing service type to prevent conflicts
     if (value === 'restaurante') {
+      console.log('[DeliverySelector] Resetando dados do formulário para restaurante');
       setFormData({
         bairro: '',
         rua: '',
@@ -203,14 +205,20 @@ const Endereco = () => {
             )}
 
             {/* Formulário de Delivery */}
-            {tipoServico === 'delivery' && (
-              <div className="animate-fade-in space-y-6">
+            <div style={{ display: tipoServico === 'delivery' ? 'block' : 'none' }}>
+              <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="bairro" className="text-sm font-medium text-gray-700">
                       Bairro *
                     </Label>
-                    <Select value={formData.bairro} onValueChange={(value) => handleInputChange('bairro', value)}>
+                    <Select 
+                      value={formData.bairro} 
+                      onValueChange={(value) => {
+                        console.log('[DeliverySelector] Bairro selecionado:', value);
+                        handleInputChange('bairro', value);
+                      }}
+                    >
                       <SelectTrigger className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500">
                         <SelectValue placeholder="Selecione seu bairro" />
                       </SelectTrigger>
@@ -237,7 +245,10 @@ const Endereco = () => {
                       id="rua"
                       type="text"
                       value={formData.rua}
-                      onChange={(e) => handleInputChange('rua', e.target.value)}
+                      onChange={(e) => {
+                        console.log('[DeliverySelector] Rua alterada:', e.target.value);
+                        handleInputChange('rua', e.target.value);
+                      }}
                       placeholder="Ex: Rua das Flores"
                       className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
                       autoComplete="street-address"
@@ -254,7 +265,10 @@ const Endereco = () => {
                       id="numero"
                       type="text"
                       value={formData.numero}
-                      onChange={(e) => handleInputChange('numero', e.target.value)}
+                      onChange={(e) => {
+                        console.log('[DeliverySelector] Número alterado:', e.target.value);
+                        handleInputChange('numero', e.target.value);
+                      }}
                       placeholder="Ex: 123"
                       className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
                       autoComplete="off"
@@ -269,7 +283,10 @@ const Endereco = () => {
                       id="complemento"
                       type="text"
                       value={formData.complemento}
-                      onChange={(e) => handleInputChange('complemento', e.target.value)}
+                      onChange={(e) => {
+                        console.log('[DeliverySelector] Complemento alterado:', e.target.value);
+                        handleInputChange('complemento', e.target.value);
+                      }}
                       placeholder="Ex: Apto 101, Bloco A"
                       className="w-full transition-all duration-200 focus:scale-[1.02] border-2 focus:border-red-500"
                       autoComplete="off"
@@ -277,7 +294,7 @@ const Endereco = () => {
                   </div>
                 </div>
               </div>
-            )}
+            </div>
 
             <div className="pt-6">
               <Button 
