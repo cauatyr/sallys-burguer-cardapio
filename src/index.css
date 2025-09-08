@@ -120,15 +120,20 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Artisanal Badge Style */
+  /* Artisanal Badge Style - Updated for black inactive state */
   .artisanal-badge {
-    @apply bg-secondary text-secondary-foreground px-4 py-2 rounded-full font-medium shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105;
-    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--accent)));
+    @apply bg-black text-white px-4 py-2 rounded-2xl font-semibold shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105;
+    background: #000000;
+  }
+
+  .artisanal-badge:hover {
+    @apply bg-primary/80 text-primary-foreground;
+    background: #A52A2A;
   }
 
   .artisanal-badge.active {
     @apply bg-primary text-primary-foreground shadow-lg;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--destructive)));
+    background: hsl(var(--primary));
   }
 
   /* Card with artisanal texture */
