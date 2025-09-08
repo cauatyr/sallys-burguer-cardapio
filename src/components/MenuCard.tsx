@@ -46,18 +46,19 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
     <>
       <div 
         onClick={handleCardClick}
-        className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden animate-fade-in group cursor-pointer hover:scale-105"
+        className="artisanal-card hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden animate-fade-in-up group cursor-pointer hover:scale-105"
         style={{ 
           animationDelay: `${delay}s`
         }}
       >
         {/* Image */}
-        <div className="relative h-48 overflow-hidden" style={{ backgroundColor: '#4A4A4A' }}>
+        <div className="relative h-48 overflow-hidden bg-muted">
           {!imageError && item.image ? (
             <img
               src={item.image}
               alt={item.name}
               className="w-full h-full object-contain"
+              onError={() => setImageError(true)}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -71,19 +72,19 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
               e.stopPropagation();
               setIsFavorite(!isFavorite);
             }}
-            className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 hover:scale-110 shadow-md"
+            className="absolute top-3 right-3 w-10 h-10 bg-card/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-card transition-all duration-300 hover:scale-110 shadow-md"
           >
             <Heart
               size={20}
               className={`transition-colors ${
-                isFavorite ? 'text-red-500 fill-red-500' : 'text-gray-400'
+                isFavorite ? 'text-primary fill-primary' : 'text-muted-foreground'
               }`}
             />
           </button>
 
           {/* Category Badge */}
           <div 
-            className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg"
+            className="absolute top-3 left-3 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium shadow-lg"
           >
             {item.categoryName}
           </div>
@@ -92,22 +93,22 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
         {/* Content */}
         <div className="p-6">
           <div className="flex items-start justify-between mb-3">
-            <h3 className="text-xl font-bold text-gray-800 group-hover:text-red-600 transition-colors">
+            <h3 className="text-xl font-artisanal font-bold text-foreground group-hover:text-primary transition-colors">
               {item.name}
             </h3>
             <div className="text-right">
-              <div className="text-2xl font-bold text-red-600">
+              <div className="text-2xl font-artisanal font-bold text-primary">
                 R$ {item.price.toFixed(2)}
               </div>
               {item.originalPrice && (
-                <div className="text-sm text-gray-400 line-through">
+                <div className="text-sm text-muted-foreground line-through">
                   R$ {item.originalPrice.toFixed(2)}
                 </div>
               )}
             </div>
           </div>
 
-          <p className="text-gray-600 mb-4 line-clamp-2">
+          <p className="text-muted-foreground mb-4 line-clamp-2">
             {item.description}
           </p>
 
@@ -117,7 +118,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
               {item.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full hover:bg-red-100 transition-colors duration-300"
+                  className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full hover:bg-secondary hover:text-secondary-foreground transition-colors duration-300"
                 >
                   {tag}
                 </span>
@@ -132,10 +133,10 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
               handleAddToCart();
             }}
             disabled={isAdding}
-            className={`w-full font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/20 ${
+            className={`w-full font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-105 transform hover:shadow-xl ${
               isAdding 
-                ? 'bg-green-500 text-white scale-110' 
-                : 'bg-red-500 hover:bg-red-600 text-white'
+                ? 'bg-accent text-accent-foreground scale-110' 
+                : 'bg-primary hover:bg-primary/90 text-primary-foreground hover:shadow-primary/20'
             }`}
           >
             {isAdding ? (

@@ -12,7 +12,7 @@ const MenuCategory = ({ items, onAddToCart }: MenuCategoryProps) => {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">🍽️</div>
-        <h3 className="text-xl text-gray-600">Nenhum item encontrado nesta categoria</h3>
+        <h3 className="text-xl font-artisanal text-muted-foreground">Nenhum item encontrado nesta categoria</h3>
       </div>
     );
   }

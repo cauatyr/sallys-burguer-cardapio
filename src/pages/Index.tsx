@@ -40,7 +40,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-red-50">
+    <div className="min-h-screen bg-background animate-fade-in-up">
       <Header 
         cartItemsCount={cartItems.length} 
         cartItems={cartItems} 
@@ -69,21 +69,38 @@ const Index = () => {
       </section>
 
       {/* Category Navigation */}
-      <section className="py-8 px-4 bg-white shadow-sm sticky top-0 z-10">
+      <section className="py-8 px-4 bg-card shadow-sm sticky top-16 z-10 border-b border-border">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-4">
+          {/* Mobile: Horizontal scroll */}
+          <div className="md:hidden overflow-x-auto pb-2">
+            <div className="flex space-x-3 min-w-max">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`artisanal-badge flex items-center space-x-2 px-4 py-2 whitespace-nowrap ${
+                    activeCategory === category.id ? 'active' : ''
+                  }`}
+                >
+                  <span className="text-lg">{category.icon}</span>
+                  <span className="text-sm font-medium">{category.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop: Centered flex wrap */}
+          <div className="hidden md:flex flex-wrap justify-center gap-4">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 transform shadow-md ${
-                  activeCategory === category.id
-                    ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
-                    : 'bg-gray-100 text-gray-700 hover:bg-red-100 hover:shadow-lg'
+                className={`artisanal-badge flex items-center space-x-2 px-6 py-3 ${
+                  activeCategory === category.id ? 'active' : ''
                 }`}
               >
                 <span className="text-xl">{category.icon}</span>
-                <span>{category.name}</span>
+                <span className="font-medium">{category.name}</span>
               </button>
             ))}
           </div>
@@ -98,33 +115,34 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12 px-4">
+      <footer className="bg-primary text-primary-foreground py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h3 className="text-2xl font-bold mb-4">Sally's Burguer</h3>
+          <h3 className="text-2xl font-artisanal font-bold mb-4">Sally's Burguer</h3>
+          <p className="text-accent mb-8">Artisanal Burgers & Craft Experience</p>
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
               <h4 className="font-semibold mb-2 flex items-center justify-center">
                 <span className="mr-2">📍</span>
                 Endereço
               </h4>
-              <p className="text-gray-300">Rua dos Hamburgers, 456<br />Centro - São Paulo</p>
+              <p className="text-primary-foreground/80">Rua dos Hamburgers, 456<br />Centro - São Paulo</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2 flex items-center justify-center">
                 <span className="mr-2">📞</span>
                 Contato
               </h4>
-              <p className="text-gray-300">(11) 8888-8888<br />contato@sallysburguer.com</p>
+              <p className="text-primary-foreground/80">(11) 8888-8888<br />contato@sallysburguer.com</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2 flex items-center justify-center">
                 <span className="mr-2">🕒</span>
                 Horário
               </h4>
-              <p className="text-gray-300">Seg - Dom<br />18:00 às 02:00</p>
+              <p className="text-primary-foreground/80">Seg - Dom<br />18:00 às 02:00</p>
             </div>
           </div>
-          <p className="text-gray-400">© 2024 Sally's Burguer. Todos os direitos reservados.</p>
+          <p className="text-primary-foreground/60">© 2024 Sally's Burguer. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>
