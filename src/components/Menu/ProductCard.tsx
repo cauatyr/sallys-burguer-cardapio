@@ -1,24 +1,18 @@
-import { useState } from 'react';
-import ProductModal from '../ProductModal';
-import ImageZoomModal from '../ImageZoomModal';
+import { useState, useCallback } from 'react';
+import ImageLightbox from '@/components/ui/ImageLightbox';
 
 export default function ProductCard({ product }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isImageZoomOpen, setIsImageZoomOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleCardClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleImageClick = (e) => {
-    e.stopPropagation();
-    setIsImageZoomOpen(true);
-  };
+  const openZoom = useCallback(() => {
+    console.log('[ProductCard] open zoom', product?.image);
+    setOpen(true);
+  }, [product?.image]);
 
   return (
     <>
       <div 
-        onClick={handleCardClick}
+        onClick={openZoom}
         className="artisanal-card p-4 cursor-pointer"
       >
         <span className="bg-primary text-primary-foreground text-xs px-3 py-1 rounded-full">
@@ -30,7 +24,7 @@ export default function ProductCard({ product }) {
             src={product.image}
             alt={product.name}
             className="h-40 object-contain cursor-zoom-in hover:scale-105 transition-transform duration-200"
-            onClick={handleImageClick}
+            onClick={openZoom}
           />
         </div>
 
@@ -43,17 +37,11 @@ export default function ProductCard({ product }) {
         </div>
       </div>
 
-      <ProductModal
-        item={product}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-
-      <ImageZoomModal
-        isOpen={isImageZoomOpen}
-        onClose={() => setIsImageZoomOpen(false)}
-        imageSrc={product.image}
-        imageAlt={product.name}
+      <ImageLightbox
+        open={open}
+        src={product.image}
+        alt={product.name}
+        onClose={() => setOpen(false)}
       />
     </>
   )
