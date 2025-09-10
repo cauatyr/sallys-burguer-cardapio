@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import ProductModal from '../ProductModal';
+import ImageZoomModal from '../ImageZoomModal';
 
 export default function ProductCard({ product }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImageZoomOpen, setIsImageZoomOpen] = useState(false);
 
   const handleCardClick = () => {
     setIsModalOpen(true);
+  };
+
+  const handleImageClick = (e) => {
+    e.stopPropagation();
+    setIsImageZoomOpen(true);
   };
 
   return (
@@ -22,7 +29,8 @@ export default function ProductCard({ product }) {
           <img
             src={product.image}
             alt={product.name}
-            className="h-40 object-contain"
+            className="h-40 object-contain cursor-zoom-in hover:scale-105 transition-transform duration-200"
+            onClick={handleImageClick}
           />
         </div>
 
@@ -39,6 +47,13 @@ export default function ProductCard({ product }) {
         item={product}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+      />
+
+      <ImageZoomModal
+        isOpen={isImageZoomOpen}
+        onClose={() => setIsImageZoomOpen(false)}
+        imageSrc={product.image}
+        imageAlt={product.name}
       />
     </>
   )
