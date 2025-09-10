@@ -26,23 +26,23 @@ const ProductModal = ({ item, isOpen, onClose, onAddToCart }: ProductModalProps)
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-scale-in">
+      <div className="bg-card text-card-foreground rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-enter">
         {/* Header */}
         <div className="relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-all duration-300 hover:scale-110 shadow-md"
+            className="absolute top-4 right-4 z-10 w-10 h-10 bg-card/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-card transition-all duration-300 hover:scale-110 shadow-md"
           >
-            <X size={20} className="text-gray-600" />
+            <X size={20} className="text-muted-foreground" />
           </button>
 
           {/* Image */}
-          <div className="relative h-80 bg-red-100 overflow-hidden rounded-t-2xl">
+          <div className="relative h-80 bg-muted overflow-hidden rounded-t-2xl">
             {!imageError && item.image ? (
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain animate-enter"
                 onError={() => setImageError(true)}
               />
             ) : (
@@ -62,13 +62,13 @@ const ProductModal = ({ item, isOpen, onClose, onAddToCart }: ProductModalProps)
               <Heart
                 size={20}
                 className={`transition-colors ${
-                  isFavorite ? 'text-red-500 fill-red-500' : 'text-gray-400'
+                  isFavorite ? 'text-primary fill-primary' : 'text-gray-400'
                 }`}
               />
             </button>
 
             {/* Category Badge */}
-            <div className="absolute bottom-4 left-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+            <div className="absolute bottom-4 left-4 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium shadow-lg">
               {item.categoryName}
             </div>
           </div>
@@ -77,22 +77,22 @@ const ProductModal = ({ item, isOpen, onClose, onAddToCart }: ProductModalProps)
         {/* Content */}
         <div className="p-8">
           <div className="flex items-start justify-between mb-4">
-            <h2 className="text-3xl font-bold text-gray-800">
+            <h2 className="text-3xl font-bold text-foreground">
               {item.name}
             </h2>
             <div className="text-right">
-              <div className="text-3xl font-bold text-red-600">
+              <div className="text-3xl font-bold text-primary">
                 R$ {item.price.toFixed(2)}
               </div>
               {item.originalPrice && (
-                <div className="text-lg text-gray-400 line-through">
+                <div className="text-lg text-muted-foreground line-through">
                   R$ {item.originalPrice.toFixed(2)}
                 </div>
               )}
             </div>
           </div>
 
-          <p className="text-gray-600 mb-6 text-lg leading-relaxed">
+          <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
             {item.description}
           </p>
 
@@ -102,7 +102,7 @@ const ProductModal = ({ item, isOpen, onClose, onAddToCart }: ProductModalProps)
               {item.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full hover:bg-red-100 transition-colors duration-300"
+                  className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-accent transition-colors duration-300"
                 >
                   {tag}
                 </span>
@@ -113,7 +113,7 @@ const ProductModal = ({ item, isOpen, onClose, onAddToCart }: ProductModalProps)
           {/* Add to Cart Button */}
           <Button 
             onClick={handleAddToCart}
-            className="w-full bg-red-500 hover:bg-red-600 text-white font-medium py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 hover:shadow-lg hover:scale-105 transform hover:shadow-2xl hover:shadow-red-500/20 text-lg"
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 hover:shadow-lg hover:scale-105 transform hover:shadow-primary/20 text-lg"
           >
             <Plus size={24} />
             <span>Adicionar ao Pedido</span>

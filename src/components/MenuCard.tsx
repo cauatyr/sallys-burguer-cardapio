@@ -57,8 +57,9 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain cursor-zoom-in"
               onError={() => setImageError(true)}
+              onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
