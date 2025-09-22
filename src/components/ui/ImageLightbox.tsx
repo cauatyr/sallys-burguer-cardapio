@@ -13,15 +13,23 @@ export default function ImageLightbox({ open, src, alt, onClose }: ImageLightbox
   if (!open) return null;
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    if (!open) return;
+    
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    
     document.addEventListener("keydown", onKey);
-    const { overflow } = document.body.style;
+    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
+      document.body.style.overflow = originalOverflow;
     };
-  }, [onClose]);
+  }, [open, onClose]);
 
   const node = (
     <div
