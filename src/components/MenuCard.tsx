@@ -1,8 +1,9 @@
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Heart, Plus, Check } from 'lucide-react';
 import { MenuItem } from '../types/menu';
 import ProductModal from './ProductModal';
+import ImageLightbox from './ui/ImageLightbox';
 import { useToast } from '@/hooks/use-toast';
 
 interface MenuCardProps {
@@ -15,6 +16,7 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImageZoomOpen, setIsImageZoomOpen] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const { toast } = useToast();
 
@@ -42,6 +44,12 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
     setIsModalOpen(true);
   };
 
+  const handleImageClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('[MenuCard] open zoom', item?.image);
+    setIsImageZoomOpen(true);
+  }, [item?.image]);
+
   return (
     <>
       <div 
@@ -57,9 +65,9 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-full object-contain cursor-zoom-in"
+              className="w-full h-full object-contain cursor-zoom-in hover:scale-105 transition-transform duration-200"
               onError={() => setImageError(true)}
-              onClick={(e) => { e.stopPropagation(); setIsModalOpen(true); }}
+              onClick={handleImageClick}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -160,6 +168,13 @@ const MenuCard = ({ item, delay = 0, onAddToCart }: MenuCardProps) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAddToCart={onAddToCart}
+      />
+
+      <ImageLightbox
+        open={isImageZoomOpen}
+        src={item.image || ''}
+        alt={item.name}
+        onClose={() => setIsImageZoomOpen(false)}
       />
     </>
   );
