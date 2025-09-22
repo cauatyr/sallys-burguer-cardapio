@@ -10,26 +10,31 @@ export type ImageLightboxProps = {
 };
 
 export default function ImageLightbox({ open, src, alt, onClose }: ImageLightboxProps) {
-  if (!open) return null;
-
   useEffect(() => {
-    if (!open) return;
-    
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-    
-    document.addEventListener("keydown", onKey);
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = originalOverflow;
-    };
+    if (open) {
+      // Desabilita scroll quando modal abre
+      document.body.style.overflow = "hidden";
+      
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          onClose();
+        }
+      };
+      
+      document.addEventListener("keydown", handleEscape);
+      
+      return () => {
+        // Sempre restaura o scroll quando componente desmonta ou modal fecha
+        document.body.style.overflow = "";
+        document.removeEventListener("keydown", handleEscape);
+      };
+    } else {
+      // Garante que o scroll seja restaurado quando modal fecha
+      document.body.style.overflow = "";
+    }
   }, [open, onClose]);
+
+  if (!open) return null;
 
   const node = (
     <div
