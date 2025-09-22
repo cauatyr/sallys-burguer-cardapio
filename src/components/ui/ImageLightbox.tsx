@@ -25,33 +25,33 @@ export default function ImageLightbox({ open, src, alt, onClose }: ImageLightbox
 
   const node = (
     <div
-      className="fixed inset-0 z-[9999] bg-black/70 flex items-center justify-center p-4"
+      className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
     >
       <button
         aria-label="Fechar"
-        className="absolute top-4 right-4 rounded-full bg-card/90 text-foreground p-3 shadow hover:bg-card transition-colors"
+        className="absolute top-4 right-4 z-10 rounded-full bg-white text-black p-3 shadow-lg hover:bg-gray-100 transition-colors"
         onClick={onClose}
       >
         <X className="w-5 h-5" />
       </button>
 
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        className="max-h-[90vh] max-w-[90vw] object-contain rounded-xl shadow-2xl animate-[zoomIn_.18s_ease]"
-        onClick={(e) => e.stopPropagation()}
-      />
-
-      <style>{`
-        @keyframes zoomIn {
-          from { transform: scale(.95); opacity: 0; }
-          to   { transform: scale(1); opacity: 1; }
-        }
-      `}</style>
+      <div className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+        <img
+          src={src}
+          alt={alt}
+          className="max-h-full max-w-full object-contain rounded-xl shadow-2xl animate-scale-in"
+          onClick={(e) => e.stopPropagation()}
+          onError={(e) => {
+            console.error('[ImageLightbox] Erro ao carregar imagem:', src);
+          }}
+          onLoad={() => {
+            console.log('[ImageLightbox] Imagem carregada:', src);
+          }}
+        />
+      </div>
     </div>
   );
 
